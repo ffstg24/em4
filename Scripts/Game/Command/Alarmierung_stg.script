@@ -45,12 +45,16 @@ object stg11 : CommandScript
 		SetCursor(IMG_CURSOR);
 
 		SetValidTargets(ACTOR_FLOOR | ACTOR_STREET);
+		System::Log("Du");
 	}
 	bool CheckPossible(GameObject *Caller)
 	{
+		System::Log("bischd");
 		GameObject o = Game::GetObjects(VEHNAME).GetObject(0);
+		System::Log("1");
 		Vehicle veh(*o);
 
+		System::Log("grosser");
 		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
 			return false;
 		return true;
@@ -64,15 +68,16 @@ object stg11 : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		
+		System::Log("Spasd");
 		GameObject o = Game::GetObjects(VEHNAME).GetObject(0);
 		Vehicle veh(*o);
 
+		System::Log("lol");
 		Actor a = Game::GetActors("spawn_"+VEHNAME).GetActor(0);
 		Vector spawnpos = a.GetPosition();
 
 		Person p;
-
+		System::Log("Nee");
 		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
 		{
 			Mission::PlayHint(""+VEHNAME+" nicht einsatzbereit!");
@@ -81,6 +86,7 @@ object stg11 : CommandScript
 
 		if(veh.HasCommand("DUMMYInBase"))
 		{
+			System::Log("I han nur");
 			//BEGIN UNIT BLOCK
 			p = Game::CreatePerson(UNIT_GF,VEHNAME);
 			p.SetPosition(veh.GetPosition());
@@ -98,6 +104,7 @@ object stg11 : CommandScript
 		}
 		else
 			v.RemoveCommand("DUMMYAvailable");
+		System::Log("1 Spass gemacht");
 		v.PushActionMove(ACTION_APPEND, Target);
 	}
 };
