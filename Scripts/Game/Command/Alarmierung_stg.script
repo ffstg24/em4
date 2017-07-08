@@ -1,0 +1,105 @@
+
+const char IMG_CURSOR[] = "aim";
+
+const char UNIT_NORMAL[] = "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
+const char UNIT_GF[] = "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
+
+
+object stgLZ : CommandScript
+{
+	stg11()
+	{
+		SetIcon("stgLZ");
+		SetCursor("aim");
+
+		SetValidTargets(ACTOR_FLOOR | ACTOR_STREET);
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Caller->GetID()==Target->GetID())
+			return false;
+		return true;
+
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Mission::PlayHint("Feuerwehr St. Georgen - Einsatzalarm Brand");
+		Game::PushActionExecuteCommand(ACTION_APPEND, "stg11", Target);
+		//TODO:Add more vehicles
+	}
+
+};
+
+
+object stg11 : CommandScript
+{
+	char* VEHNAME = "stg11";
+
+	stg11()
+	{
+		SetIcon(VEHNAME);
+		SetCursor(IMG_CURSOR);
+
+		SetValidTargets(ACTOR_FLOOR | ACTOR_STREET);
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		GameObject o = Game::GetObjects(VEHNAME).GetObject(0);
+		Vehicle veh(*o);
+
+		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
+			return false;
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Caller->GetID()==Target->GetID())
+			return false;
+		return true;
+
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		
+		GameObject o = Game::GetObjects(VEHNAME).GetObject(0);
+		Vehicle veh(*o);
+
+		Actor a = Game::GetActors("spawn_"+VEHNAME).GetActor(0);
+		Vector spawnpos = a.GetPosition();
+
+		Person p;
+
+		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
+		{
+			Mission::PlayHint(""+VEHNAME+" nicht einsatzbereit!");
+			return;
+		}
+
+		if(veh.HasCommand("DUMMYInBase"))
+		{
+			//BEGIN UNIT BLOCK
+			p = Game::CreatePerson(UNIT_GF,VEHNAME);
+			p.SetPosition(veh.GetPosition());
+			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
+			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
+			//END UNIT BLOCK
+			//BEGIN UNIT BLOCK
+			p = Game::CreatePerson(UNIT_NORMAL,VEHNAME);
+			p.SetPosition(veh.GetPosition());
+			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
+			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
+			//END UNIT BLOCK
+
+			v.RemoveCommand("DUMMYInBase");
+		}
+		else
+			v.RemoveCommand("DUMMYAvailable");
+		v.PushActionMove(ACTION_APPEND, Target);
+	}
+};
+
+//TODO: Add more vehicles!

@@ -1,0 +1,99 @@
+
+const char IMG_CURSOR[] 	= "aim";
+
+const char UNIT_NORMAL[] 	= "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
+const char UNIT_GF[] 		= "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
+
+
+const char SPAWN_NORD[] 	= "SPAWN_nord";
+
+object ls40 : CommandScript
+{
+	char* VEHNAME = "ls40";
+	char* VEHPATH = "";
+	int RESP_TIME = 35;
+
+	ls40()
+	{
+		SetIcon(VEHNAME);
+		SetCursor(IMG_CURSOR);
+
+		SetValidTargets(ACTOR_FLOOR | ACTOR_STREET);
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		GameObjectList l = Game::GetGameObjects(VEHNAME);
+		if(l.GetNumObjects()==0)
+			return true;
+		else 
+		{
+			GameObject* o = l.GetObject(0);
+			Vehicle v(o);
+
+			if(v.HasCommand("DUMMYAvailable"))
+				return true;
+			return false;
+		}
+
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Caller->GetID()==Target->GetID())
+			return false;
+		return true;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Vehicle veh;
+		Actor spw;
+		Person p;
+
+		GameObjectList l = Game::GetGameObjects(VEHNAME);
+		if(l.GetNumObjects()==0)
+		{
+			veh = Game::CreateVehicle(VEHPATH,VEHNAME);
+			veh.SetCommandable(false);
+			veh.Hide();
+
+			Game::PushActionWait(ACTION_APPEND, RESP_TIME);
+			GameObject* gv(veh);
+
+			bool ISFREEPOS = false;
+			while(!ISFREEPOS)
+			{
+				Game::PushActionWait(ACTION_APPEND, 5);
+				ISFREEPOS = Game::FindFreePosition(gv, spw.GetPosition(), 150);
+			}
+
+			ActorList al = Game::GetActors(SPAWN_NORD);
+			spw = *al.GetActor(0);
+			veh.SetPosition(spw.GetPosition());
+
+			//BEGIN UNIT BLOCK
+			p = Game::CreatePerson(UNIT_GF,VEHNAME);
+			p.SetPosition(veh.GetPosition());
+			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
+			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
+			//END UNIT BLOCK
+			//BEGIN UNIT BLOCK
+			p = Game::CreatePerson(UNIT_NORMAL,VEHNAME);
+			p.SetPosition(veh.GetPosition());
+			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
+			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
+			//END UNIT BLOCK
+
+			veh.Show();
+			veh.SetCommandable(true);
+			
+
+		}
+		else
+		{
+			GameObject* o = l.getObject(0);
+			veh(o);
+			veh.RemoveCommand("DUMMYAvailable");
+		}
+
+		veh.PushActionMove(ACTION_APPEND, Target);
+	}
+};
