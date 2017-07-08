@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Maps
+*.eft
+*.e4m
+*.tga
+*.pdn
