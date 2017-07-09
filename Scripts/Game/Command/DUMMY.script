@@ -1,0 +1,17 @@
+int group = 20;
+
+object DUMMYInBase : CommandScript
+{
+	DUMMYInBase(){SetGroupID(group);}
+	bool CheckPossible(GameObject *Caller){return false;}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+};
+
+object DUMMYAvailable : CommandScript
+{
+	DUMMYAvailable(){SetGroupID(group);}
+	bool CheckPossible(GameObject *Caller){return false;}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+};

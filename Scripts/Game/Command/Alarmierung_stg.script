@@ -7,7 +7,7 @@ const char UNIT_GF[] = "mod:Prototypes/Persons/Fire Department/firefighternorm.e
 
 object stgLZ : CommandScript
 {
-	stg11()
+	stgLZ()
 	{
 		SetIcon("stgLZ");
 		SetCursor("aim");
@@ -28,7 +28,7 @@ object stgLZ : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Mission::PlayHint("Feuerwehr St. Georgen - Einsatzalarm Brand");
-		Game::PushActionExecuteCommand(ACTION_APPEND, "stg11", Target);
+		Caller->PushActionExecuteCommand(ACTION_NEWLIST, "stg11", Target);
 		//TODO:Add more vehicles
 	}
 
@@ -37,24 +37,18 @@ object stgLZ : CommandScript
 
 object stg11 : CommandScript
 {
-	char* VEHNAME = "stg11";
-
 	stg11()
 	{
-		SetIcon(VEHNAME);
+		SetIcon("stg11");
 		SetCursor(IMG_CURSOR);
 
 		SetValidTargets(ACTOR_FLOOR | ACTOR_STREET);
-		System::Log("Du");
 	}
 	bool CheckPossible(GameObject *Caller)
 	{
-		System::Log("bischd");
-		GameObject o = Game::GetObjects(VEHNAME).GetObject(0);
-		System::Log("1");
-		Vehicle veh(*o);
-
-		System::Log("grosser");
+		GameObjectList l = Game::GetGameObjects("stg11");
+		GameObject* o = l.GetObject(0);
+		Vehicle veh(o);
 		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
 			return false;
 		return true;
@@ -68,44 +62,40 @@ object stg11 : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Spasd");
-		GameObject o = Game::GetObjects(VEHNAME).GetObject(0);
-		Vehicle veh(*o);
-
-		System::Log("lol");
-		Actor a = Game::GetActors("spawn_"+VEHNAME).GetActor(0);
-		Vector spawnpos = a.GetPosition();
-
+		System::Log("Log 3");
+		GameObjectList l = Game::GetGameObjects("stg11");
+		GameObject* o = l.GetObject(0);
+		Vehicle veh(o);
 		Person p;
-		System::Log("Nee");
+
+		System::Log("Log 4");
 		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
 		{
-			Mission::PlayHint(""+VEHNAME+" nicht einsatzbereit!");
+			Mission::PlayHint("stg11: Fahrzeug nicht einsatzbereit!");
 			return;
 		}
 
 		if(veh.HasCommand("DUMMYInBase"))
 		{
-			System::Log("I han nur");
 			//BEGIN UNIT BLOCK
-			p = Game::CreatePerson(UNIT_GF,VEHNAME);
+			p = Game::CreatePerson(UNIT_GF,"stg11_GF");
 			p.SetPosition(veh.GetPosition());
-			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
+			p.SetCommandable(true);
 			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
 			//END UNIT BLOCK
 			//BEGIN UNIT BLOCK
-			p = Game::CreatePerson(UNIT_NORMAL,VEHNAME);
+			p = Game::CreatePerson(UNIT_NORMAL,"stg11");
 			p.SetPosition(veh.GetPosition());
-			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
+			p.SetCommandable(true);
 			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
 			//END UNIT BLOCK
 
-			v.RemoveCommand("DUMMYInBase");
+			veh.RemoveCommand("DUMMYInBase");
 		}
 		else
-			v.RemoveCommand("DUMMYAvailable");
-		System::Log("1 Spass gemacht");
-		v.PushActionMove(ACTION_APPEND, Target);
+			veh.RemoveCommand("DUMMYAvailable");
+		System::Log("Log 5");
+		veh.PushActionMove(ACTION_APPEND, Target->GetPosition());
 	}
 };
 
