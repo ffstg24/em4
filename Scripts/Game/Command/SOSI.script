@@ -1,0 +1,86 @@
+object SOSIBluelights : CommandScript
+{
+	SOSIBluelights()
+	{
+		SetIcon("bluelights");
+		SetRestrictions(RESTRICT_SELFEXECUTE);
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		if(Caller->GetType() == ACTOR_VEHICLE)
+			return true;
+		return false;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Target->GetID() == Caller->GetID())
+			return true;
+		return false;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Target->HasCommand("DUMMYBluelightsOn"))
+		{
+			Caller->PushActionExecuteCommand(ACTION_NEWLIST, "SOSISirenOff", Target, 0, false);
+			Caller->PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOff", Target, 0, false);
+		}
+		else
+		{
+			Caller->PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOn", Target, 0, false);
+		}
+	}
+};
+
+object SOSIBluelightsOn : CommandScript
+{
+	SOSIBluelightsOn()
+	{
+		SetRestrictions(RESTRICT_SELFEXECUTE);
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		if(Caller->GetType() == ACTOR_VEHICLE)
+			return true;
+		return false;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Target->GetID() == Caller->GetID())
+			return true;
+		return false;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		System::Log("Log 1");
+		Vehicle v(Caller);
+		v.EnableBlueLights(true);
+		v.AssignCommand("DUMMYBluelightsOn");
+	}
+};
+
+object SOSIBluelightsOff : CommandScript
+{
+	SOSIBluelightsOff()
+	{
+		SetRestrictions(RESTRICT_SELFEXECUTE);
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		if(Caller->GetType() == ACTOR_VEHICLE)
+			return true;
+		return false;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Target->GetID() == Caller->GetID())
+			return true;
+		return false;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Vehicle v(Caller);
+		v.EnableBlueLights(false);
+		v.RemoveCommand("DUMMYBluelightsOn");
+	}
+};
+

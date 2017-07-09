@@ -1,0 +1,70 @@
+void Start()
+{
+	GameObjectList ol;
+	GameObject* o;
+
+//////// Disponent 1 ////////
+	ol = Game::GetGameObjects("dispo_1");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	Game::AddToGroup(o, 0);
+
+	//Commands:
+	v.AssignCommand("stgLZ");
+
+//////// Disponent 2 ////////
+	ol = Game::GetGameObjects("dispo_2");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	Game::AddToGroup(o, 1);
+
+	//Commands:
+	v.AssignCommand("stg11");
+
+/*
+//////// Disponent 3 ////////
+	ol = Game::GetGameObjects("dispo_3");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	Game::AddToGroup(v, 0);
+
+	//Commands:
+
+//////// Disponent 4 ////////
+	ol = Game::GetGameObjects("dispo_4");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	Game::AddToGroup(v, 0);
+
+	//Commands:
+
+	*/
+
+//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg11");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(10.0f);          	          
+    v.SetMaxPassengers(4);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+};
+
+bool OnLoad()
+{
+    Start();
+    Process::Kill();
+    return true;
+};

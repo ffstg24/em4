@@ -5,6 +5,9 @@ const char UNIT_NORMAL[] = "mod:Prototypes/Persons/Fire Department/firefighterno
 const char UNIT_GF[] = "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
 
 
+GameObjectList l;
+GameObject* o;
+
 object stgLZ : CommandScript
 {
 	stgLZ()
@@ -28,7 +31,7 @@ object stgLZ : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Mission::PlayHint("Feuerwehr St. Georgen - Einsatzalarm Brand");
-		Caller->PushActionExecuteCommand(ACTION_NEWLIST, "stg11", Target);
+		Caller->PushActionExecuteCommand(ACTION_NEWLIST, "stg11", Target, 0, false);
 		//TODO:Add more vehicles
 	}
 
@@ -46,9 +49,11 @@ object stg11 : CommandScript
 	}
 	bool CheckPossible(GameObject *Caller)
 	{
-		GameObjectList l = Game::GetGameObjects("stg11");
-		GameObject* o = l.GetObject(0);
+		
+		l = Game::GetGameObjects("stg11");
+		o = l.GetObject(0);
 		Vehicle veh(o);
+
 		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
 			return false;
 		return true;
@@ -62,13 +67,12 @@ object stg11 : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log 3");
-		GameObjectList l = Game::GetGameObjects("stg11");
-		GameObject* o = l.GetObject(0);
+		l = Game::GetGameObjects("stg11");
+		o = l.GetObject(0);
 		Vehicle veh(o);
+
 		Person p;
 
-		System::Log("Log 4");
 		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
 		{
 			Mission::PlayHint("stg11: Fahrzeug nicht einsatzbereit!");
@@ -90,12 +94,19 @@ object stg11 : CommandScript
 			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
 			//END UNIT BLOCK
 
+			veh.PushActionWait(ACTION_NEWLIST, 12.0);
 			veh.RemoveCommand("DUMMYInBase");
+			veh.SetCommandable(true);
 		}
 		else
 			veh.RemoveCommand("DUMMYAvailable");
-		System::Log("Log 5");
+
+		veh.EnableHeadLights(true);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOn", o, 0, false);
 		veh.PushActionMove(ACTION_APPEND, Target->GetPosition());
+		//veh.PushActionWait(ACTION_APPEND, 3.0);
+		//veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOn", &o, 0, false);
 	}
 };
 
