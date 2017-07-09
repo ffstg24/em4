@@ -8,6 +8,10 @@ const char UNIT_GF[] = "mod:Prototypes/Persons/Fire Department/firefighternorm.e
 GameObjectList l;
 GameObject* o;
 
+ActorList al;
+Actor* a;
+Vector sosipos;
+
 object stgLZ : CommandScript
 {
 	stgLZ()
@@ -73,6 +77,10 @@ object stg11 : CommandScript
 		o = l.GetObject(0);
 		Vehicle veh(o);
 
+		al = Game::GetActors("gh_ausfahrt");
+		a = al.GetActor(0);
+		sosipos = a->GetPosition();
+
 		Person p;
 
 		if(!veh.HasCommand("DUMMYInBase")&&!veh.HasCommand("DUMMYAvailable"))
@@ -100,16 +108,16 @@ object stg11 : CommandScript
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
 			veh.SetCommandable(true);
+			veh.EnableHeadLights(true);
+			veh.PushActionWait(ACTION_APPEND, 3.0);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionMove(ACTION_APPEND, sosipos);
 		}
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.EnableHeadLights(true);
-		veh.PushActionWait(ACTION_APPEND, 3.0);
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOn", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
-		veh.PushActionWait(ACTION_APPEND, 3.0);
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOn", o, 0, false);
 	}
 };
 

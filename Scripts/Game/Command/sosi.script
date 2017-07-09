@@ -1,35 +1,184 @@
+// (c) Max Fleig
+// Script basiert auf "LASiren.script" aus der LA Mod 2.0:				
+// 		Script by Bass-Ti	
+//		Modified by Hoppah																		
+
+const char EACTION_FINDPATH[] 		= "EActionFindPath";
+const char EACTION_EXTINGUISH[] 	= "EActionExtinguish";
+const char DUMMY_HASSIREN[] 		= "DUMMYSirenOn";
+const char DUMMY_UPDATEPOS[] 		= "SOSIUpdatePos";
+const char DUMMY_FINDPATH[] 		= "DummyFindPath";
+const char NAME_DUMMYOBJECT[] 		= "HelpingObjekt_Hoppah";
+
+int DummyGroup = 23;
+
 object SOSISiren : CommandScript
 {
-	SOSISiren(){}
-	bool CheckPossible(GameObject *Caller){return false;}	
-	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
-	void PushActions(GameObject *Caller, Actor *Target, int childID){}
-};
+	SOSISiren()
+	{
+		SetIcon("siren");
+		SetRestrictions(RESTRICT_SELFEXECUTE);
+		SetPossibleCallers(ACTOR_VEHICLE);
+ 		SetGroupID(DummyGroup);
+ 		SetGroupLeader(true);
+	}
 
-object SOSISirenOn : CommandScript
-{
-	SOSISirenOn(){}
-	bool CheckPossible(GameObject *Caller){return false;}	
-	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
-	void PushActions(GameObject *Caller, Actor *Target, int childID){}
-};
+	bool CheckPossible(GameObject *Caller)
+	{
+		if (!Caller->IsValid())
+			return false;
 
-object SOSISirenOff : CommandScript
-{
-	SOSISirenOff(){}
-	bool CheckPossible(GameObject *Caller){return false;}	
-	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
-	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+		return true;
+	}
+
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if (!Target->IsValid() || Target->GetID() != Caller->GetID())
+			return false;
+
+		return true;
+	}
+
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Vehicle v(Caller);
+		if (!v.HasCommand(DUMMY_HASSIREN)||childID>0)
+		{
+			if (!v.IsBlueLightEnabled())
+			{
+				v.EnableBlueLights(true);
+			}
+
+			int soundID;
+			Vector CarPos = v.GetPosition();
+ 			if (StrCompare(Caller->GetName(), "stg11") == 0)
+ 			{
+				int random = Math::rand()%3;
+				//if (random == 0)
+				//{
+  					soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/test.wav", CarPos, true);
+				//} else
+				//{
+  				//	soundID = Audio::PlaySample3D("mod:Audio/FX/Sirens/Siren02.wav", CarPos, true);
+				//}
+ 			}
+ 			
+ 			int CarID = v.GetID();
+			GameObject mDummy =  Game::CreateObject("mod:Prototypes/Objects/Misc/empty.e4p", NAME_DUMMYOBJECT);
+			v.AssignCommand(DUMMY_HASSIREN);
+			v.SetUserData(soundID);
+			mDummy.Hide();
+			//mDummy.SetUserData(v.GetID());
+			mDummy.SetUserData(soundID);
+			mDummy.AttachSound(soundID);
+			mDummy.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_UPDATEPOS, &v, 0, false);
+			return;
+ 		}
+		if (v.HasCommand(DUMMY_HASSIREN))
+		{
+			System::Log("Stop sample via SOSISiren");
+			int CarID = v.GetUserData();
+			int ref = v.GetUserData();
+			v.UnattachSound(ref);
+			Audio::StopSample(ref);
+			int mSirTest;
+			GameObjectList list = Game::GetGameObjects(NAME_DUMMYOBJECT);
+			for(int i=0; i<list.GetNumObjects(); i++)
+			{
+				GameObject *obj = list.GetObject(i);
+				if (obj->GetUserData() == CarID)
+				{
+					mSirTest = i;
+				}
+			}
+
+			GameObject *obj = list.GetObject(mSirTest);
+			obj->PushActionDeleteOwner(ACTION_NEWLIST);
+
+			if (v.HasCommand(DUMMY_HASSIREN))
+				v.RemoveCommand(DUMMY_HASSIREN);
+
+			return;
+		}
+	}
 };
 
 object SOSIUpdatePos : CommandScript
 {
-	SOSIUpdatePos(){}
-	bool CheckPossible(GameObject *Caller){return false;}	
-	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
-	void PushActions(GameObject *Caller, Actor *Target, int childID){}
-};
+	SOSIUpdatePos()
+	{
+		SetGroupID(DummyGroup);
+	}
 
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+	}
+
+  	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Vehicle v(Target);
+		GameObject mDummy(Caller);
+
+		if (v.IsDestroyed() || !v.IsValid())
+		{
+			int ref = mDummy.GetUserData();
+			mDummy.UnattachSound(ref);
+			Audio::StopSample(ref);
+
+			if (v.HasCommand(DUMMY_HASSIREN))
+				v.RemoveCommand(DUMMY_HASSIREN);
+
+			mDummy.PushActionDeleteOwner(ACTION_NEWLIST);
+		} 
+		else
+		  {
+			if (v.IsCurrentAction(EACTION_FINDPATH))
+			{
+				if (!v.HasCommand(DUMMY_FINDPATH))
+				{
+					v.AssignCommand(DUMMY_FINDPATH);
+				}
+			}
+			Vector vPos = v.GetPosition();
+			mDummy.SetPosition(vPos);
+			mDummy.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_UPDATEPOS, Target, childID, false);
+		  }
+
+		if (v.HasCommand(DUMMY_FINDPATH))
+		{
+			if (!v.IsCurrentAction(EACTION_FINDPATH) && (v.GetNumActions() == 0 || v.IsCurrentAction(EACTION_EXTINGUISH)))
+			{
+				if (v.HasCommand(DUMMY_HASSIREN))
+					v.RemoveCommand(DUMMY_HASSIREN);
+
+				if (v.HasCommand(DUMMY_FINDPATH))
+					v.RemoveCommand(DUMMY_FINDPATH);
+
+				int CarID = v.GetUserData();
+				int ref = v.GetUserData();
+				v.UnattachSound(ref);
+				Audio::StopSample(ref);
+
+				GameObjectList list = Game::GetGameObjects(NAME_DUMMYOBJECT);
+				for(int i = 0; i < list.GetNumObjects(); i++)
+				{
+					int mSirTest;
+					GameObject *obj = list.GetObject(i);
+					if (obj->GetUserData() == CarID)
+					{
+						mSirTest = i;
+						GameObject *obj = list.GetObject(mSirTest);
+						obj->PushActionDeleteOwner(ACTION_NEWLIST);
+						if (v.HasCommand(DUMMY_HASSIREN))
+							v.RemoveCommand(DUMMY_HASSIREN);
+						if (v.HasCommand(DUMMY_FINDPATH))
+							v.RemoveCommand(DUMMY_FINDPATH);
+					}
+				}
+			}
+		}
+	}
+};
 
 object SOSIBluelights : CommandScript
 {
@@ -49,43 +198,8 @@ object SOSIBluelights : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vehicle v(Caller);
-		if(v.IsBlueLightEnabled())
-			Caller->PushActionExecuteCommand(ACTION_APPEND,	"SOSIBluelightsOff", Target, 0, false);
-		else Caller->PushActionExecuteCommand(ACTION_APPEND,"SOSIBluelightsOn", Target, 0, false);	
-	}
-};
-
-
-object SOSIBluelightsOn : CommandScript
-{
-	bool CheckPossible(GameObject *Caller)
-	{
-		return true;
-	}	
-	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
-	{
-		return true;
-	}
-	void PushActions(GameObject *Caller, Actor *Target, int childID)
-	{
-		Vehicle v(Caller);
-		v.EnableBlueLights(true);
-	}
-};
-
-object SOSIBluelightsOff : CommandScript
-{
-	bool CheckPossible(GameObject *Caller)
-	{
-		return true;
-	}	
-	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
-	{
-		return true;
-	}
-	void PushActions(GameObject *Caller, Actor *Target, int childID)
-	{
-		Vehicle v(Caller);
-		v.EnableBlueLights(false);
+		if(v.IsBlueLightEnabled()&&childID==0)
+			v.EnableBlueLights(false);
+		else v.EnableBlueLights(true);
 	}
 };

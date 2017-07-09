@@ -16,14 +16,6 @@ object DUMMYAvailable : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID){}
 };
 
-object DUMMYBluelightsOn : CommandScript
-{
-	DUMMYBluelightsOn(){SetGroupID(group);}
-	bool CheckPossible(GameObject *Caller){return false;}	
-	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
-	void PushActions(GameObject *Caller, Actor *Target, int childID){}
-};
-
 object DUMMYSirenOn : CommandScript
 {
 	DUMMYSirenOn(){SetGroupID(group);}
@@ -32,3 +24,10 @@ object DUMMYSirenOn : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID){}
 };
 
+object DUMMYFindPath : CommandScript
+{
+	DUMMYFindPath(){SetGroupID(group);}
+	bool CheckPossible(GameObject *Caller){return false;}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+};
