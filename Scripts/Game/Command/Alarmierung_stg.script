@@ -1,3 +1,4 @@
+//(c) Max Fleig
 
 const char IMG_CURSOR[] = "aim";
 
@@ -66,6 +67,8 @@ object stg11 : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
+		Vector targetpos = Target->GetPosition();
+
 		l = Game::GetGameObjects("stg11");
 		o = l.GetObject(0);
 		Vehicle veh(o);
@@ -103,8 +106,10 @@ object stg11 : CommandScript
 
 		veh.EnableHeadLights(true);
 		veh.PushActionWait(ACTION_APPEND, 3.0);
+		/*System::Log("Log 1");
 		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOn", o, 0, false);
-		veh.PushActionMove(ACTION_APPEND, Game::GetCommandPos());
+		System::Log("Log 2");*/
+		veh.PushActionMove(ACTION_APPEND, targetpos);
 		//veh.PushActionWait(ACTION_APPEND, 3.0);
 		//veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOn", o, 0, false);
 	}

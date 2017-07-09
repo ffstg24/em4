@@ -1,3 +1,5 @@
+//(c) Max Fleig
+
 object gate : CommandScript
 {
 	gate(){}

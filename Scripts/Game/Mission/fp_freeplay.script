@@ -60,6 +60,9 @@ void Start()
 	v.EnableHeadLights(false);
 	v.SetCommandable(false);
 	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSISiren"); //DEBUG
+	v.AssignCommand("SOSIBluelights");
 };
 
 bool OnLoad()
