@@ -2,6 +2,9 @@ object SOSISiren : CommandScript
 {
 	SOSISiren()
 	{
+		SetIcon("siren");
+
+		SetRestrictions(RESTRICT_SELFEXECUTE);
 	}
 	bool CheckPossible(GameObject *Caller)
 	{
@@ -9,13 +12,20 @@ object SOSISiren : CommandScript
 	}	
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
 	{
-		return true;
+		if(Caller->GetID() == Target->GetID())
+			return true;
+		return false;
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log!");
+		Vehicle v(Caller);
+		if(v.HasCommand("DUMMYSirenOn"))
+			Caller->PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOff", Target, 0, false);
+		else Caller->PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOn", Target, 0, false);
 	}
 };
+
+
 
 object SOSISirenOn : CommandScript
 {
@@ -32,7 +42,22 @@ object SOSISirenOn : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log!");
+		Vehicle v(Caller);
+		Caller->PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOn", Target, 0, false);
+		char path[255];
+		switch(Caller->GetName())
+		{
+			case "stg11":
+				path = "mod:Audio\FX\Sondersignal\test.wav";
+			break;
+			
+		}
+		int soundID=Audio::PlaySample3D(path, v.GetPosition(), true);
+		GameObject ob=Game::CreateObject("mod:Prototypes/Objects/Misc/empty.e4p", "sound");
+		ob.Hide();
+		ob.SetUserData(v.GetID());
+		ob.PushActionExecuteCommand(ACTION_NEWLIST,"SOSIUpdatePos",&v,soundID,false);
+		v.SetUserData(soundID);
 	}
 };
 
@@ -51,10 +76,48 @@ object SOSISirenOff : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log!");
+		Vehicle v(Caller);
+		v.SetUserData(0);
+		Audio::StopSample(v.GetUserData());
+		GameObjectList obj=Game::GetGameObjects("sound");
+		for(int i=0;i<obj.GetNumObjects();i++)if(obj.GetObject(i)->GetUserData()==v.GetID())obj.GetObject(i)->PushActionDeleteOwner(ACTION_NEWLIST);
 	}
 };
 
+object SOSIUpdatePos : CommandScript
+{
+	SOSIUpdatePos()
+	{
+	}
+	
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}
+	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		return true;
+	}
+	
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{	
+		Vehicle v(Target);
+		
+		if(v.IsValid()&&v.GetEnergy()>0&&Audio::IsPlaying(childID)&&v.IsBlueLightEnabled()&&(v.IsCurrentAction("EActionMove")||v.IsMoving()||v.GetNumActions()>0)){
+			GameObject ob(Caller);
+			Audio::UpdatePos(childID, v.GetPosition(), true);
+			v.SetUserData(childID);
+			ob.PushActionExecuteCommand(ACTION_NEWLIST,"SOSIUpdatePos",Target,childID,false);
+		}
+		else
+		{
+			v.SetUserData(0);
+			Audio::StopSample(childID);
+			Caller->PushActionDeleteOwner(ACTION_NEWLIST);
+		}
+	}
+};
 object SOSIBluelights : CommandScript
 {
 	SOSIBluelights()
@@ -70,7 +133,10 @@ object SOSIBluelights : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log!");
+		Vehicle v(Caller);
+		if(v.IsBlueLightEnabled())
+			Caller->PushActionExecuteCommand(ACTION_APPEND,	"SOSIBluelightsOff", Target, 0, false);
+		else Caller->PushActionExecuteCommand(ACTION_APPEND,"SOSIBluelightsOn", Target, 0, false);	
 	}
 };
 
@@ -89,7 +155,8 @@ object SOSIBluelightsOn : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log!");
+		Vehicle v(Caller);
+		v.EnableBlueLights(true);
 	}
 };
 
@@ -108,6 +175,7 @@ object SOSIBluelightsOff : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log!");
+		Vehicle v(Caller);
+		v.EnableBlueLights(false);
 	}
 };
