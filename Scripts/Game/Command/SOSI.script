@@ -51,7 +51,6 @@ object SOSIBluelightsOn : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		System::Log("Log 1");
 		Vehicle v(Caller);
 		v.EnableBlueLights(true);
 		v.AssignCommand("DUMMYBluelightsOn");

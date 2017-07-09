@@ -94,7 +94,7 @@ object stg11 : CommandScript
 			//END UNIT BLOCK
 
 			veh.PushActionWait(ACTION_NEWLIST, 12.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
 			veh.SetCommandable(true);
 		}
