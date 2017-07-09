@@ -84,3 +84,18 @@ object SOSIBluelightsOff : CommandScript
 	}
 };
 
+object SOSISirenOn : CommandScript
+{
+	SOSISirenOn(){}
+	bool CheckPossible(GameObject *Caller){return false;}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID){System::Log("Tatütata!");}
+};
+
+object SOSISirenOff : CommandScript
+{
+	SOSISirenOff(){}
+	bool CheckPossible(GameObject *Caller){return false;}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+};

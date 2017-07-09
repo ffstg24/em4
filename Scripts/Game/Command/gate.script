@@ -1,0 +1,19 @@
+object gate : CommandScript
+{
+	gate(){}
+	bool CheckPossible(GameObject *Caller){return false;}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		char gatename[255];
+		snprintf(gatename, 255, "gate_%s", Caller->GetName());
+
+		GameObjectList l(gatename);
+		if(l.GetNumObjects() == 0) return;
+
+		GameObject* o = l.GetObject(0);
+		if(childID == 1)
+			o->SetAnimation("open");
+		else o->SetAnimation("close");
+	}
+};
