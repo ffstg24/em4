@@ -104,7 +104,7 @@ object stg11 : CommandScript
 		veh.EnableHeadLights(true);
 		veh.PushActionWait(ACTION_APPEND, 3.0);
 		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOn", o, 0, false);
-		veh.PushActionMove(ACTION_APPEND, Target->GetPosition());
+		veh.PushActionMove(ACTION_APPEND, Game::GetCommandPos());
 		//veh.PushActionWait(ACTION_APPEND, 3.0);
 		//veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOn", &o, 0, false);
 	}
