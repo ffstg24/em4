@@ -67,7 +67,7 @@ object stg11 : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
-		Vector targetpos = Target->GetPosition();
+		Vector targetpos = Game::GetCommmandPos();
 
 		l = Game::GetGameObjects("stg11");
 		o = l.GetObject(0);
