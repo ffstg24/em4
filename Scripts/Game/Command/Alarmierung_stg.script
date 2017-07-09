@@ -106,12 +106,10 @@ object stg11 : CommandScript
 
 		veh.EnableHeadLights(true);
 		veh.PushActionWait(ACTION_APPEND, 3.0);
-		/*System::Log("Log 1");
 		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelightsOn", o, 0, false);
-		System::Log("Log 2");*/
 		veh.PushActionMove(ACTION_APPEND, targetpos);
-		//veh.PushActionWait(ACTION_APPEND, 3.0);
-		//veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOn", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISirenOn", o, 0, false);
 	}
 };
 

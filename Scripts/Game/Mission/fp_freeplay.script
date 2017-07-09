@@ -61,8 +61,8 @@ void Start()
 	v.SetCommandable(false);
 	v.AssignCommand("DUMMYInBase");
 
-	v.AssignCommand("SOSISiren"); //DEBUG
 	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
 };
 
 bool OnLoad()

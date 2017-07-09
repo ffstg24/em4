@@ -1,0 +1,113 @@
+object SOSISiren : CommandScript
+{
+	SOSISiren()
+	{
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		return true;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		System::Log("Log!");
+	}
+};
+
+object SOSISirenOn : CommandScript
+{
+	SOSISirenOn()
+	{
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		return true;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		System::Log("Log!");
+	}
+};
+
+object SOSISirenOff : CommandScript
+{
+	SOSISirenOff()
+	{
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		return true;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		System::Log("Log!");
+	}
+};
+
+object SOSIBluelights : CommandScript
+{
+	SOSIBluelights()
+	{
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		return true;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		System::Log("Log!");
+	}
+};
+
+object SOSIBluelightsOn : CommandScript
+{
+	SOSIBluelightsOn()
+	{
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		return true;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		System::Log("Log!");
+	}
+};
+
+object SOSIBluelightsOff : CommandScript
+{
+	SOSIBluelightsOff()
+	{
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		return true;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		return true;
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		System::Log("Log!");
+	}
+};
