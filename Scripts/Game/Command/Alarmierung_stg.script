@@ -5,7 +5,7 @@ const char IMG_CURSOR[] = "aim";
 const char UNIT_NORMAL[] = "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
 const char UNIT_GF[] = "mod:Prototypes/Persons/Fire Department/firefighternorm_upgrade.e4p";
 const char UNIT_EL[] = "mod:Prototypes/Persons/Fire Department/firefighternorm_upgrade2.e4p";
-const char EO_MARKER[] = "mod:Prototypes/Objects/Marker/eo_marker.e4p";
+const char EO_MARKER[] = "mod:Prototypes/Objects/Equipment/bottle.e4p";
 
 GameObjectList l;
 GameObject* o;
@@ -13,6 +13,7 @@ GameObject* o;
 ActorList al;
 Actor* a;
 Vector sosipos;
+
 
 object stgLZ : CommandScript
 {
@@ -25,7 +26,25 @@ object stgLZ : CommandScript
 	}
 	bool CheckPossible(GameObject *Caller)
 	{
-		return true;
+		GameObjectList vl = Game::GetGameObjects("stg11");
+		GameObject* vo = vl.GetObject(0);
+		Vehicle v1(vo);
+		vl = Game::GetGameObjects("stg442");
+		vo = vl.GetObject(0);
+		Vehicle v2(vo);
+		vl = Game::GetGameObjects("stg33");
+		vo = vl.GetObject(0);
+		Vehicle v3(vo);
+		vl = Game::GetGameObjects("stg24");
+		vo = vl.GetObject(0);
+		Vehicle v4(vo);
+
+		if ((v1.HasCommand("DUMMYInBase") || v1.HasCommand("DUMMYAvailable"))&&
+			(v2.HasCommand("DUMMYInBase") || v2.HasCommand("DUMMYAvailable"))&&
+			(v3.HasCommand("DUMMYInBase") || v3.HasCommand("DUMMYAvailable"))&&
+			(v4.HasCommand("DUMMYInBase") || v4.HasCommand("DUMMYAvailable")))
+			return true;
+		return false;
 	}	
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
 	{
@@ -36,12 +55,97 @@ object stgLZ : CommandScript
 	}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
+
 		Mission::PlayHint("Feuerwehr St. Georgen - Einsatzalarm Brand");
 
-		Game::ExecuteCommand("stg11", Caller, Target);
-		Game::ExecuteCommand("stg442", Caller, Target);
-		Game::ExecuteCommand("stg33", Caller, Target);
-		Game::ExecuteCommand("stg24", Caller, Target);
+		
+		//CREATING ON-SCENE REFERENCE OBJECT BEGIN
+		Vector v = Game::GetCommandPos();
+		GameObjectList epol("ffstg_ePos");
+		if(epol.GetNumObjects()==0)
+		{
+			Game::CreateObject(EO_MARKER,"ffstg_ePos");
+			epol = Game::GetGameObjects("ffstg_ePos");
+		}
+		GameObject* epo = epol.GetObject(0);
+		epo->SetPosition(v);
+		//CREATING ON-SCENE REFERENCE OBJECT END
+
+		Caller->PushActionExecuteCommand(ACTION_NEWLIST, "stg11", Target, 1, false);
+		Caller->PushActionWait(ACTION_APPEND, 7.0);
+		Caller->PushActionExecuteCommand(ACTION_APPEND, "stg442", Target, 1, false);
+		Caller->PushActionWait(ACTION_APPEND, 7.0);
+		Caller->PushActionExecuteCommand(ACTION_APPEND, "stg33", Target, 1, false);
+		Caller->PushActionWait(ACTION_APPEND, 7.0);
+		Caller->PushActionExecuteCommand(ACTION_APPEND, "stg24", Target, 1, false);
+
+	}
+};
+
+object stgRZ : CommandScript
+{
+	stgRZ()
+	{
+		SetIcon("stgRZ");
+		SetCursor("aim");
+
+		SetValidTargets(ACTOR_FLOOR | ACTOR_STREET);
+	}
+	bool CheckPossible(GameObject *Caller)
+	{
+		GameObjectList vl = Game::GetGameObjects("stg11");
+		GameObject* vo = vl.GetObject(0);
+		Vehicle v1(vo);
+		vl = Game::GetGameObjects("stg442");
+		vo = vl.GetObject(0);
+		Vehicle v2(vo);
+		vl = Game::GetGameObjects("stg59");
+		vo = vl.GetObject(0);
+		Vehicle v3(vo);
+		vl = Game::GetGameObjects("stg24");
+		vo = vl.GetObject(0);
+		Vehicle v4(vo);
+
+		if ((v1.HasCommand("DUMMYInBase") || v1.HasCommand("DUMMYAvailable"))&&
+			(v2.HasCommand("DUMMYInBase") || v2.HasCommand("DUMMYAvailable"))&&
+			(v3.HasCommand("DUMMYInBase") || v3.HasCommand("DUMMYAvailable"))&&
+			(v4.HasCommand("DUMMYInBase") || v4.HasCommand("DUMMYAvailable")))
+			return true;
+		return false;
+	}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(Caller->GetID()==Target->GetID())
+			return false;
+		return true;
+
+	}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+
+		Mission::PlayHint("Feuerwehr St. Georgen - Einsatzalarm Hilfe");
+
+		
+		//CREATING ON-SCENE REFERENCE OBJECT BEGIN
+		Vector v = Game::GetCommandPos();
+		GameObjectList epol("ffstg_ePos");
+		if(epol.GetNumObjects()==0)
+		{
+			Game::CreateObject(EO_MARKER,"ffstg_ePos");
+			epol = Game::GetGameObjects("ffstg_ePos");
+		}
+		GameObject* epo = epol.GetObject(0);
+		epo->SetPosition(v);
+		//CREATING ON-SCENE REFERENCE OBJECT END
+
+		Caller->PushActionExecuteCommand(ACTION_NEWLIST, "stg11", Target, 1, false);
+		Caller->PushActionWait(ACTION_APPEND, 7.0);
+		Caller->PushActionExecuteCommand(ACTION_APPEND, "stg442", Target, 1, false);
+		Caller->PushActionWait(ACTION_APPEND, 7.0);
+		Caller->PushActionExecuteCommand(ACTION_APPEND, "stg59", Target, 1, false);
+		Caller->PushActionWait(ACTION_APPEND, 7.0);
+		Caller->PushActionExecuteCommand(ACTION_APPEND, "stg24", Target, 1, false);
+
 	}
 };
 
@@ -76,6 +180,12 @@ object stg11 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 
 		l = Game::GetGameObjects("stg11");
 		o = l.GetObject(0);
@@ -169,6 +279,12 @@ object stg442 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 
 		l = Game::GetGameObjects("stg442");
 		o = l.GetObject(0);
@@ -299,7 +415,12 @@ object stg33 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
-
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 		l = Game::GetGameObjects("stg33");
 		o = l.GetObject(0);
 		Vehicle veh(o);
@@ -387,7 +508,12 @@ object stg24 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
-
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 		l = Game::GetGameObjects("stg24");
 		o = l.GetObject(0);
 		Vehicle veh(o);
@@ -475,7 +601,12 @@ object stg441 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
-
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 		l = Game::GetGameObjects("stg441");
 		o = l.GetObject(0);
 		Vehicle veh(o);
@@ -611,7 +742,12 @@ object stg61 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
-
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 		l = Game::GetGameObjects("stg61");
 		o = l.GetObject(0);
 		Vehicle veh(o);
@@ -699,7 +835,12 @@ object stg59 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
-
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 		l = Game::GetGameObjects("stg59");
 		o = l.GetObject(0);
 		Vehicle veh(o);
@@ -805,7 +946,12 @@ object stg49 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
-
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 		l = Game::GetGameObjects("stg49");
 		o = l.GetObject(0);
 		Vehicle veh(o);
@@ -941,7 +1087,12 @@ object stg19 : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vector targetpos = Game::GetCommandPos();
-
+		if(childID==1)
+		{
+			GameObjectList tl = Game::GetGameObjects("ffstg_ePos");
+			GameObject* to = tl.GetObject(0);
+			targetpos = to->GetPosition();
+		}
 		l = Game::GetGameObjects("stg19");
 		o = l.GetObject(0);
 		Vehicle veh(o);

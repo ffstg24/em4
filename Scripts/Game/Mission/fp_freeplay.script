@@ -12,6 +12,7 @@ void Start()
 
 	//Commands:
 	v.AssignCommand("stgLZ");
+	v.AssignCommand("stgRZ");
 
 //////// Disponent 2 ////////
 	ol = Game::GetGameObjects("dispo_2");
