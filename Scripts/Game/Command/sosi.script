@@ -51,18 +51,61 @@ object SOSISiren : CommandScript
 
 			int soundID;
 			Vector CarPos = v.GetPosition();
- 			if (StrCompare(Caller->GetName(), "stg11") == 0)
+
+			//Fahrzeugblock Start
+ 			if (StrCompare(Caller->GetName(), 		"stg11") == 0)
  			{
 				int random = Math::rand()%3;
-				//if (random == 0)
-				//{
-  					soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/test.wav", CarPos, true);
-				//} else
-				//{
-  				//	soundID = Audio::PlaySample3D("mod:Audio/FX/Sirens/Siren02.wav", CarPos, true);
-				//}
+				if (random == 0){soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/l620.wav", CarPos, true);}
+				else if(random == 1){soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/s620.wav", CarPos, true);}
+				else {soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/martin1.wav", CarPos, true);}
  			}
- 			
+ 			else if (StrCompare(Caller->GetName(), 	"stg442") == 0)
+ 			{
+				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/442.wav", CarPos, true);
+ 			}
+ 			else if (StrCompare(Caller->GetName(), 	"stg33") == 0)
+ 			{
+				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/martin2.wav", CarPos, true);
+ 			}
+ 			else if (StrCompare(Caller->GetName(), 	"stg24") == 0)
+ 			{
+				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/martin1.wav", CarPos, true);
+ 			}
+ 			else if (StrCompare(Caller->GetName(), 	"stg441") == 0)
+ 			{
+				int random = Math::rand()%2;
+				if (random == 0){soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/441.wav", CarPos, true);}
+				else {soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/starkton1.wav", CarPos, true);}
+ 			}
+ 			else if (StrCompare(Caller->GetName(), 	"stg61") == 0)
+ 			{
+				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/starkton1.wav", CarPos, true);
+ 			}
+ 			else if (StrCompare(Caller->GetName(), 	"stg59") == 0)
+ 			{
+				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/martin3.wav", CarPos, true);
+ 			}
+ 			else if (StrCompare(Caller->GetName(), 	"stg49") == 0)
+ 			{
+				int random = Math::rand()%2;
+				if (random == 0){soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/49_land.wav", CarPos, true);}
+				else {soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/49_stadt.wav", CarPos, true);}
+ 			}
+ 			else if (StrCompare(Caller->GetName(), 	"stg19") == 0)
+ 			{
+				int random = Math::rand()%2;
+				if (random == 0){soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/l620.wav", CarPos, true);}
+				else {soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/s620.wav", CarPos, true);}
+ 			}
+
+ 			//Fahrzeugblock Ende
+
+ 			else
+ 			{
+ 				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/l620.wav", CarPos, true);
+ 				System::Log("Sosi nicht gefunden!");
+ 			}
  			int CarID = v.GetID();
 			GameObject mDummy =  Game::CreateObject("mod:Prototypes/Objects/Misc/empty.e4p", NAME_DUMMYOBJECT);
 			v.AssignCommand(DUMMY_HASSIREN);

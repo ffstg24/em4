@@ -22,6 +22,14 @@ void Start()
 
 	//Commands:
 	v.AssignCommand("stg11");
+	v.AssignCommand("stg442");
+	v.AssignCommand("stg33");
+	v.AssignCommand("stg24");
+	v.AssignCommand("stg441");
+	v.AssignCommand("stg61");
+	v.AssignCommand("stg59");
+	v.AssignCommand("stg49");
+	v.AssignCommand("stg19");
 
 /*
 //////// Disponent 3 ////////
@@ -44,15 +52,176 @@ void Start()
 
 	*/
 
-//////// Fahrzeugblock ////////
+	//////// Fahrzeugblock ////////
 
 
 	ol = Game::GetGameObjects("stg11");
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(10.0f);          	          
+	v.SetSpeed(11.0f);          	          
     v.SetMaxPassengers(4);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+	//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg442");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(9.0f);          	          
+    v.SetMaxPassengers(9);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+
+	//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg33");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(9.0f);          	          
+    v.SetMaxPassengers(3);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+	//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg24");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(9.0f);          	          
+    v.SetMaxPassengers(3);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+	//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg441");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(8.0f);          	          
+    v.SetMaxPassengers(9);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg61");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(8.0f);          	          
+    v.SetMaxPassengers(3);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg59");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(9.0f);          	          
+    v.SetMaxPassengers(6);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg49");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(9.0f);          	          
+    v.SetMaxPassengers(9);                    
+	v.SetMaxTransports(0);                    
+	v.EnableBlueLights(false);
+	v.EnableBreakLights(false);
+	v.EnableSpecialLights(false);
+	v.EnableHeadLights(false);
+	v.SetCommandable(false);
+	v.AssignCommand("DUMMYInBase");
+
+	v.AssignCommand("SOSIBluelights");
+	v.AssignCommand("SOSISiren");
+
+	//////// Fahrzeugblock ////////
+
+
+	ol = Game::GetGameObjects("stg19");
+	o = ol.GetObject(0);
+	Vehicle v(o);
+
+	v.SetSpeed(11.0f);          	          
+    v.SetMaxPassengers(9);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
 	v.EnableBreakLights(false);
