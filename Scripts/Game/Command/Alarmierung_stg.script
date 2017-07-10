@@ -3,8 +3,8 @@
 const char IMG_CURSOR[] = "aim";
 
 const char UNIT_NORMAL[] = "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
-const char UNIT_GF[] = "mod:Prototypes/Persons/Fire Department/firefighterupgrade.e4p";
-
+const char UNIT_GF[] = "mod:Prototypes/Persons/Fire Department/firefighternorm_upgrade.e4p";
+const char UNIT_EL[] = "mod:Prototypes/Persons/Fire Department/firefighternorm_upgrade2.e4p";
 const char EO_MARKER[] = "mod:Prototypes/Objects/Marker/eo_marker.e4p";
 
 GameObjectList l;
@@ -38,13 +38,9 @@ object stgLZ : CommandScript
 	{
 		Mission::PlayHint("Feuerwehr St. Georgen - Einsatzalarm Brand");
 
-		System::Sleep(5);
 		Game::ExecuteCommand("stg11", Caller, Target);
-		System::Sleep(5);
 		Game::ExecuteCommand("stg442", Caller, Target);
-		System::Sleep(5);
 		Game::ExecuteCommand("stg33", Caller, Target);
-		System::Sleep(5);
 		Game::ExecuteCommand("stg24", Caller, Target);
 	}
 };
@@ -104,11 +100,22 @@ object stg11 : CommandScript
 			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
 			//END UNIT BLOCK
 			//BEGIN UNIT BLOCK
+			p = Game::CreatePerson(UNIT_EL, "einsatzleiter");
+			p.SetPosition(veh.GetPosition());
+			p.SetCommandable(true);
+			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
+			//END UNIT BLOCK
+
+			int r = rand()%2;
+			if(r)
+			{
+			//BEGIN UNIT BLOCK
 			p = Game::CreatePerson(UNIT_NORMAL, "stg11");
 			p.SetPosition(veh.GetPosition());
 			p.SetCommandable(true);
 			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
 			//END UNIT BLOCK
+			}
 
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%4)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
