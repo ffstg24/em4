@@ -142,6 +142,9 @@ void Start()
 
 	v.AssignCommand("SOSIBluelights");
 	v.AssignCommand("SOSISiren");
+	v.AssignCommand("park");
+
+	v.RemoveCommand("gohome");
 
 	//////// Fahrzeugblock ////////
 
