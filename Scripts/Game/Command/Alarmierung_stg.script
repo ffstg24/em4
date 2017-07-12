@@ -201,6 +201,8 @@ object stg11 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -230,10 +232,9 @@ object stg11 : CommandScript
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%4)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
-			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -244,7 +245,8 @@ object stg11 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -300,6 +302,10 @@ object stg442 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -366,10 +372,9 @@ object stg442 : CommandScript
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%4)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
-			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -380,7 +385,8 @@ object stg442 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -435,6 +441,8 @@ object stg33 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -459,10 +467,9 @@ object stg33 : CommandScript
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%4)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
-			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -473,7 +480,8 @@ object stg33 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -528,6 +536,8 @@ object stg24 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -552,10 +562,9 @@ object stg24 : CommandScript
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%5)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
-			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -566,7 +575,8 @@ object stg24 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -621,6 +631,8 @@ object stg441 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -693,10 +705,9 @@ object stg441 : CommandScript
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%4)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
-			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -707,7 +718,8 @@ object stg441 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -762,6 +774,8 @@ object stg61 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -789,7 +803,7 @@ object stg61 : CommandScript
 			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -800,7 +814,8 @@ object stg61 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -855,6 +870,8 @@ object stg59 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -900,7 +917,7 @@ object stg59 : CommandScript
 			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -911,7 +928,8 @@ object stg59 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -966,6 +984,8 @@ object stg49 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -1038,10 +1058,9 @@ object stg49 : CommandScript
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%4)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
-			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -1052,7 +1071,8 @@ object stg49 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };
@@ -1107,6 +1127,8 @@ object stg19 : CommandScript
 			return;
 		}
 
+		veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", o, 0, false);
+		veh.PushActionWait(ACTION_APPEND, 3.0);
 		if(veh.HasCommand("DUMMYInBase"))
 		{
 			//BEGIN UNIT BLOCK
@@ -1188,10 +1210,9 @@ object stg19 : CommandScript
 			veh.PushActionWait(ACTION_NEWLIST, (rand()%4)+11);
 			veh.PushActionExecuteCommand(ACTION_APPEND, "gate", o, 2, false);
 			veh.RemoveCommand("DUMMYInBase");
-			veh.SetCommandable(true);
 			veh.EnableHeadLights(true);
 			veh.PushActionWait(ACTION_APPEND, 3.0);
-			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 1, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", o, 0, false);
 
 			al = Game::GetActors("gh_ausfahrt");
 			a = al.GetActor(0);
@@ -1202,7 +1223,8 @@ object stg19 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 1, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
 };

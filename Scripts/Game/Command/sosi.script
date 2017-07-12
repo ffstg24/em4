@@ -42,7 +42,7 @@ object SOSISiren : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vehicle v(Caller);
-		if (!v.HasCommand(DUMMY_HASSIREN)||childID>0)
+		if (!v.HasCommand(DUMMY_HASSIREN)&&!childID)
 		{
 			if (!v.IsBlueLightEnabled())
 			{
@@ -103,9 +103,10 @@ object SOSISiren : CommandScript
 
  			else
  			{
- 				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/l620.wav", CarPos, true);
+ 				soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/empty.wav", CarPos, true);
  				System::Log("Sosi nicht gefunden!");
  			}
+
  			int CarID = v.GetID();
 			GameObject mDummy =  Game::CreateObject("mod:Prototypes/Objects/Misc/empty.e4p", NAME_DUMMYOBJECT);
 			v.AssignCommand(DUMMY_HASSIREN);
@@ -117,7 +118,7 @@ object SOSISiren : CommandScript
 			mDummy.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_UPDATEPOS, &v, 0, false);
 			return;
  		}
-		if (v.HasCommand(DUMMY_HASSIREN))
+		if (v.HasCommand(DUMMY_HASSIREN)||childID)
 		{
 			System::Log("Stop sample via SOSISiren");
 			int CarID = v.GetUserData();
@@ -135,8 +136,11 @@ object SOSISiren : CommandScript
 				}
 			}
 
-			GameObject *obj = list.GetObject(mSirTest);
-			obj->PushActionDeleteOwner(ACTION_NEWLIST);
+			if(list.GetNumObjects()>0)
+			{
+				GameObject *obj = list.GetObject(mSirTest);
+				obj->PushActionDeleteOwner(ACTION_NEWLIST);
+			}
 
 			if (v.HasCommand(DUMMY_HASSIREN))
 				v.RemoveCommand(DUMMY_HASSIREN);
@@ -241,7 +245,7 @@ object SOSIBluelights : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vehicle v(Caller);
-		if(v.IsBlueLightEnabled()&&childID==0)
+		if(v.IsBlueLightEnabled()||childID)
 			v.EnableBlueLights(false);
 		else v.EnableBlueLights(true);
 	}

@@ -5,7 +5,20 @@ object DUMMYInBase : CommandScript
 	DUMMYInBase(){SetGroupID(group);}
 	bool CheckPossible(GameObject *Caller){return false;}	
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
-	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Vehicle v(Caller);
+		if(childID)
+		{
+			v.AssignCommand("DUMMYInBase");
+			v.EnableBlueLights(false);
+			v.EnableBreakLights(false);
+			v.EnableSpecialLights(false);
+			v.EnableHeadLights(false);
+			v.SetCommandable(false);
+		}
+		else v.RemoveCommand("DUMMYInBase");
+	}
 };
 
 object DUMMYAvailable : CommandScript
@@ -13,7 +26,15 @@ object DUMMYAvailable : CommandScript
 	DUMMYAvailable(){SetGroupID(group);}
 	bool CheckPossible(GameObject *Caller){return false;}	
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
-	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Vehicle v(Caller);
+		if(childID)
+		{
+			v.AssignCommand("DUMMYAvailable");
+		}
+		else v.RemoveCommand("DUMMYAvailable");
+	}
 };
 
 object DUMMYSirenOn : CommandScript
@@ -30,4 +51,20 @@ object DUMMYFindPath : CommandScript
 	bool CheckPossible(GameObject *Caller){return false;}	
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
 	void PushActions(GameObject *Caller, Actor *Target, int childID){}
+};
+
+object DUMMYCommandable : CommandScript
+{
+	DUMMYCommandable(){SetGroupID(group);}
+	bool CheckPossible(GameObject *Caller){return false;}	
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return false;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		Vehicle v(Caller);
+		if(childID)
+		{
+			v.SetCommandable(true);
+		}
+		else v.SetCommandable(false);
+	}
 };
