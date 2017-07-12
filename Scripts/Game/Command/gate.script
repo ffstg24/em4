@@ -8,7 +8,7 @@ object gate : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		char gatename[255] = Caller->GetName();
-		if(childID > 1)
+		if(!Caller->HasNamePrefix("gate_"))
 			snprintf(gatename, 255, "gate_%s", Caller->GetName());
 		System::Log(gatename);
 
@@ -18,17 +18,17 @@ object gate : CommandScript
 		GameObject* o = l.GetObject(0);
 		if(childID == 1)
 		{
-			o->SetAnimation("closed");
 			o->SetAnimation("open");
+			o->SetUserData(1);
 		}
 		else if (childID == 0) 
 		{
-			o->SetAnimation("opened");
 			o->SetAnimation("close");
+			o->SetUserData(1);
 		}
 		else
 		{
-			o->PushActionExecuteCommand(ACTION_INSERT, "gate", Target, 1, false);
+			o->PushActionExecuteCommand(ACTION_NEWLIST, "gate", Target, 1, false);
 			o->PushActionWait(ACTION_APPEND, (rand() % 10) + 12);
 			o->PushActionExecuteCommand(ACTION_APPEND, "gate", Target, 0, false);
 		}
