@@ -1,0 +1,60 @@
+Nutzungsbestimmungen:
+
+Fahrzeug: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1669
+No license to skin in another vehicle!
+You can scale higher or deeper, but not build to an another car, and attaching with childs (when you have
+an license) it's okay - that's the rules of owner NNICO!
+I (BASTIAN) have finished this version for a higher realism version. 
+
+
+Blaulicht: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=2050&s=431f77351937c6eeecf46a4e15499186fde3152e
+1) Namensnennung auf Screenshots und in der ReadMe
+2) 3D-Änderungen erlaubt
+3) Regelungen der anderen Autoren beachten und einhalten
+4) Weitergabe unter selben Bedingungen
+5) Verwendung nur in Spielen der Emergency Spielreihe gestattet
+6) Keine kommerzielle Nutzung erlaubt 
+
+
+Blaulichtbalken: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=2059
+1) Autorennennung in ReadMe-Dateien und unter Screenshots
+2) Größere Modelländerungen bitte mit dem Autor absprechen
+3) Upload auf anderen Websites ist NICHT gestattet 
+
+
+Pressslufthorn: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1585
+1) Nutzung für alle erlaubt.
+2) Nennung von Niederwallufer in der Readme.
+3) Modelländerungen erlaubt, sollten aber öffentlich zugänglich gemacht werden.
+4) Skalieren ohne Einschränkungen erlaubt.
+5) Eine kommerzielle Nutzung ist unter keinen Umständen gestattet 
+
+Umfeldbeleuchtung 1: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1541 
+1) Autorennennung in ReadMe-Dateien
+2) Upload auf anderen Emergency-Seiten nur mit Erlaubnis des Autors
+3) 3D-Änderungen nur bei Bereitstellung der geänderten Dateien, inklusive Autorennennung 
+
+Umfeldbeleuchtung 2: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1477 
+1) Nutzung für alle erlaubt.
+2) Nennung von Niederwallufer in der Readme.
+3) Modelländerungen erlaubt, sollten aber öffentlich zugänglich gemacht werden.
+4) Skalieren ohne Einschränkungen erlaubt.
+5) Eine kommerzielle Nutzung ist unter keinen Umständen gestattet 
+
+Zusatzblinker: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=518
+- Erlaubnisanfragen sind schön aber nicht notwendig
+- In der Readme und auf Screens müssen unsere Namen stehen.
+- Hochladen auf andere Seiten erlaubt wenn unsere Namen dabei stehen.
+- Modelländerungen sind erlaubt, wenn wir genannt werden und die Änderungen der Community zugänglich gemacht werden 
+
+Rückfahrkamera: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=841 
+1. Das Modell ist für jeden Frei verwendbar, ausser denen Usern, die Modellverbot haben.
+2. Bei Screens im Internet müssen die Autoren genannt werden.
+3. Änderungen am Modell sind vorher mit mir abzusprechen - Skinänderungen jederzeit erlaubt.
+4. Bei Nichteinhaltung der Regeln kann ein MODELLVEROBT oder ähnliche Strafen folgen.
+5. Für die Nutzung fremder Modelle gelten deren Regln. 
+
+Antenne: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=2038
+1) Autorennennung unter Screenshots erwünscht aber kein Muss
+2) Autorennennung in ReadMe-Dateien ist Pflicht
+3) Verwendung nur in Verbindung mit EMERGENCY 4 erlaubt 

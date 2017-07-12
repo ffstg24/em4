@@ -1,0 +1,38 @@
+Nutzungsbestimmungen:
+
+Fahrzeug: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=721
+1) Es sind geltende Nutzungsverbote von derLukas und Florian Mark zu beachten.
+2) Die Textur darf ohne jegliche Einschränkungen angepasst werden, allerdings ist die 3D-technische Änderung, schließt Anpassungen der UV-Map ein, untersagt und nur nach vorheriger schriftlicher Genehmigung des Urhebers gestattet.
+3) Unter Screenshots sowie in der ReadMe sind die Urheber zu nennen. 
+
+Lichtmast: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1388
+Keine Bestimmungen bekannt. 
+
+Haspelhalterung: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1393
+1) Autorennennung unter Screenshots und in ReadMe-Dateien
+2) Änderungen am 3D-Modell nur mit Erlaubnis des Autors 
+
+Haspel: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1332
+1) Das Modell ist frei verwendbar für jeden.
+2) Eine Erlaubnisanfrage bei Verwendung in öffentlichen Modifikationen ist nicht notwendig.
+3) Nennung des Autors unter Screens ist keine Pflicht aber "schön".
+4) Nennung des Autors in der Readme oder ähnlichen Dokumenten ist Pflicht.
+5) Änderungen am Skin sind erlaubt.
+6) Eine Änderung an dem Modell ist nur unter Absprache mit dem jeweiligen Autor erlaubt. (Ausgenommen Alpha-Modding) 
+
+
+Steckleiter+Pylonen: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=1710
+1) Unter Screenshots, Videos und in ReadMes bin ich (911Lukas911) zu nennen! (Ausnahme unter Gruppenbildern und Einsatzberichten)
+2) Das Umskinnen ist jederzeit erlaubt
+3) Das Ändern des Modells und der UV Map ist ohne Erlaubnis von 911Lukas911 untersagt! Bei Zuwiederhandlung folgt nach einem Hinweis ein Modellverbot!
+4) Skalieren ist erlaubt, sofern die Modelle in allen 3-Achsen skaliert werden (XYZ)
+5) Eine kommerzielle Nutzung ist untersagt! Bei Zuwiederhandlung folgt ein Modellverbot!
+6) Der Inhalt ist nur für die Spiele Emergency 3 und 4 zu verwenden 
+
+Räder: http://www.emergency-forum.de/index.php?page=DatabaseItem&id=549
+1) Verwendung für alle erlaubt
+2) keine Lizenzanfragen notwendig
+3) Nennung der Autoren / des Autors in Readme
+4) Modelländerungen nach Absprache mit dem Ersteller
+- Skinänderungen & skalieren (z.B. mit dem v3o-Resizer) jederzeit und ohne Absprache erlaubt
+5) Eine komerzielle Nutzung ist unter keinen Umständen erlaubt 
