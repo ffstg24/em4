@@ -1,0 +1,157 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+#
+# Multi/Sub Material__43 (18) to come 
+#
+newmtl 15-body
+Ka  0.0 0.0 0.0
+Kd  0.8 0.5 0.1
+Ks  0.9 0.7 0.1
+d  1.0
+Ns  1.9
+illum 2
+#
+newmtl 15-shield
+Ka  0.0 0.0 0.0
+Kd  0.1 0.1 0.1
+Ks  0.1 0.1 0.1
+d  1.0
+Ns  10.0
+illum 2
+#
+newmtl 15-black
+Ka  0.0 0.0 0.0
+Kd  0.0 0.0 0.0
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  10.0
+illum 2
+#
+newmtl 15-halo
+Ka  0.0 0.0 0.0
+Kd  0.6 0.6 0.6
+Ks  0.8 0.8 0.8
+d  1.0
+Ns  10.0
+illum 2
+map_Kd 15-halo.jpg
+#
+newmtl 15-chrome
+Ka  0.0 0.0 0.0
+Kd  0.3 0.3 0.3
+Ks  0.5 0.5 0.5
+d  1.0
+Ns  3.5
+illum 2
+#
+newmtl 15-alu
+Ka  0.0 0.0 0.0
+Kd  0.3 0.3 0.3
+Ks  0.3 0.3 0.3
+d  1.0
+Ns  0.0
+illum 2
+#
+newmtl 15-tire
+Ka  0.0 0.0 0.0
+Kd  0.1 0.1 0.1
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  10.0
+illum 2
+bump 15-tire.jpg
+#
+newmtl 15-plate
+Ka  0.0 0.0 0.0
+Kd  0.8 0.8 0.8
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  10.0
+illum 2
+map_Kd 15-plate.jpg
+#
+newmtl 15-inside
+Ka  0.0 0.0 0.0
+Kd  0.6 0.5 0.4
+Ks  0.3 0.2 0.2
+d  1.0
+Ns  10.0
+illum 2
+#
+newmtl 15-glass_black
+Ka  0.0 0.0 0.0
+Kd  0.1 0.1 0.1
+Ks  0.2 0.2 0.2
+d  1.0
+Ns  3.3
+illum 2
+#
+newmtl 15-glass
+Ka  0.0 0.0 0.0
+Kd  0.2 0.2 0.2
+Ks  0.5 0.5 0.5
+d  0.4
+Ns  0.8
+illum 2
+#
+newmtl 15-mirror
+Ka  0.0 0.0 0.0
+Kd  0.0 0.0 0.0
+Ks  0.8 0.8 0.8
+d  1.0
+Ns  10.0
+illum 2
+#
+newmtl 15-fl_mirror
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.7 0.7 0.7
+d  1.0
+Ns  10.0
+illum 2
+#
+newmtl 15-fl_mirror_orange
+Ka  0.0 0.0 0.0
+Kd  0.8 0.4 0.0
+Ks  0.7 0.4 0.0
+d  1.0
+Ns  10.0
+illum 2
+map_Kd 15-orange.jpg
+#
+newmtl 15-fl_bulb
+Ka  0.0 0.0 0.0
+Kd  0.7 0.8 0.8
+Ks  0.7 0.7 0.7
+d  1.0
+Ns  10.0
+illum 2
+#
+newmtl 15-fl_glass
+Ka  0.0 0.0 0.0
+Kd  0.0 0.0 0.0
+Ks  0.3 0.3 0.3
+d  0.3
+Ns  3.2
+illum 2
+#
+newmtl 15-bl_red
+Ka  0.0 0.0 0.0
+Kd  0.7 0.0 0.0
+Ks  0.6 0.0 0.0
+d  1.0
+Ns  10.0
+illum 2
+map_Kd 15-back-red.jpg
+#
+newmtl 15-red
+Ka  0.0 0.0 0.0
+Kd  0.7 0.0 0.0
+Ks  0.4 0.0 0.0
+d  1.0
+Ns  10.0
+illum 2
+map_Kd 15-rear.jpg
+#
+# Multi/Sub Material__43 done 
+#
+# EOF
