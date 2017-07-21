@@ -19,8 +19,6 @@ object SOSISiren : CommandScript
 		SetIcon("siren");
 		SetRestrictions(RESTRICT_SELFEXECUTE);
 		SetPossibleCallers(ACTOR_VEHICLE);
- 		SetGroupID(DummyGroup);
- 		SetGroupLeader(true);
 	}
 
 	bool CheckPossible(GameObject *Caller)
@@ -28,6 +26,11 @@ object SOSISiren : CommandScript
 		if (!Caller->IsValid())
 			return false;
 
+		return true;
+	}
+
+	bool CheckGroupVisibility(GameObject *Caller)
+	{
 		return true;
 	}
 
@@ -42,8 +45,11 @@ object SOSISiren : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
 		Vehicle v(Caller);
+		
 		if (!v.HasCommand(DUMMY_HASSIREN)&&!childID)
 		{
+			v.SetSpeed(v.GetSpeed()*2);
+
 			if (!v.IsBlueLightEnabled())
 			{
 				v.EnableBlueLights(true);
@@ -118,8 +124,9 @@ object SOSISiren : CommandScript
 			mDummy.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_UPDATEPOS, &v, 0, false);
 			return;
  		}
-		if (v.HasCommand(DUMMY_HASSIREN)||childID)
+		if (v.HasCommand(DUMMY_HASSIREN)||childID&&childID!=2)
 		{
+			v.SetSpeed(v.GetSpeed()/2);
 			System::Log("Stop sample via SOSISiren");
 			int CarID = v.GetUserData();
 			int ref = v.GetUserData();
@@ -233,6 +240,7 @@ object SOSIBluelights : CommandScript
 	{
 		SetIcon("bluelights");
 		SetRestrictions(RESTRICT_SELFEXECUTE);
+
 	}
 	bool CheckPossible(GameObject *Caller)
 	{

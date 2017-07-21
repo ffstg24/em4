@@ -3,6 +3,9 @@ void Start()
 	GameObjectList ol;
 	GameObject* o;
 
+	float s_car = 7.0;
+	float s_truck = 6.0;
+
 //////// Disponent 1 ////////
 	ol = Game::GetGameObjects("dispo_1");
 	o = ol.GetObject(0);
@@ -60,7 +63,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(11.0f);          	          
+	v.SetSpeed(s_car);          	          
     v.SetMaxPassengers(4);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -83,7 +86,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(9.0f);          	          
+	v.SetSpeed(s_truck);          	          
     v.SetMaxPassengers(9);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -107,7 +110,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(9.0f);          	          
+	v.SetSpeed(s_truck);          	          
     v.SetMaxPassengers(3);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -130,7 +133,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(9.0f);          	          
+	v.SetSpeed(s_truck);          	          
     v.SetMaxPassengers(3);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -153,7 +156,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(8.0f);          	          
+	v.SetSpeed(s_truck);          	          
     v.SetMaxPassengers(9);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -176,7 +179,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(8.0f);          	          
+	v.SetSpeed(s_truck);          	          
     v.SetMaxPassengers(3);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -200,7 +203,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(9.0f);          	          
+	v.SetSpeed(s_truck);          	          
     v.SetMaxPassengers(6);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -223,7 +226,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(9.0f);          	          
+	v.SetSpeed(s_truck);          	          
     v.SetMaxPassengers(9);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
@@ -246,7 +249,7 @@ void Start()
 	o = ol.GetObject(0);
 	Vehicle v(o);
 
-	v.SetSpeed(11.0f);          	          
+	v.SetSpeed(s_car);          	          
     v.SetMaxPassengers(9);                    
 	v.SetMaxTransports(0);                    
 	v.EnableBlueLights(false);
