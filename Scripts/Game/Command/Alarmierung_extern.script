@@ -94,7 +94,6 @@ object ls40 : CommandScript
 
 			
 			veh.RemoveCommand("DUMMYInBase");
-
 		}
 		else
 		{
@@ -103,6 +102,6 @@ object ls40 : CommandScript
 			veh.RemoveCommand("DUMMYAvailable");
 		}
 
-		veh.PushActionMove(ACTION_APPEND, Target->GetPosition());
+		veh.PushActionMove(ACTION_APPEND, Game::GetCommandPos());
 	}
 };
