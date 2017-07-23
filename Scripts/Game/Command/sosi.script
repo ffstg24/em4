@@ -104,6 +104,12 @@ object SOSISiren : CommandScript
 				if (random == 0){soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/l620.wav", CarPos, true);}
 				else {soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/s620.wav", CarPos, true);}
  			}
+ 			else if (StrCompare(Caller->GetName(), 	"ls40") == 0)
+ 			{
+				int random = Math::rand()%2;
+				if (random == 0){soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/l620.wav", CarPos, true);}
+				else {soundID = Audio::PlaySample3D("mod:Audio/FX/Sondersignal/s620.wav", CarPos, true);}
+ 			}
 
  			//Fahrzeugblock Ende
 
@@ -200,8 +206,10 @@ object SOSIUpdatePos : CommandScript
 
 		if (v.HasCommand(DUMMY_FINDPATH))
 		{
-			if (!v.IsCurrentAction(EACTION_FINDPATH) && (v.GetNumActions() == 0 || v.IsCurrentAction(EACTION_EXTINGUISH)))
+			if ((!v.IsCurrentAction(EACTION_FINDPATH) && (v.GetNumActions() == 0 || v.IsCurrentAction(EACTION_EXTINGUISH))) || !v.IsBlueLightEnabled())
 			{
+				v.SetSpeed(v.GetSpeed()/2);
+				
 				if (v.HasCommand(DUMMY_HASSIREN))
 					v.RemoveCommand(DUMMY_HASSIREN);
 

@@ -5,24 +5,21 @@ const char UNIT_NORMAL[] 	= "mod:Prototypes/Persons/Fire Department/firefightern
 const char UNIT_GF[] 		= "mod:Prototypes/Persons/Fire Department/firefighternorm.e4p";
 
 
-const char SPAWN_NORD[] 	= "SPAWN_nord";
+const char SPAWN_NORD[] 	= "spawn_nord";
 
 object ls40 : CommandScript
 {
-	char* VEHNAME = "ls40";
-	char* VEHPATH = "";
-	int RESP_TIME = 35;
 
 	ls40()
 	{
-		SetIcon(VEHNAME);
+		SetIcon("ls40");
 		SetCursor(IMG_CURSOR);
 
 		SetValidTargets(ACTOR_FLOOR | ACTOR_STREET);
 	}
 	bool CheckPossible(GameObject *Caller)
 	{
-		GameObjectList l = Game::GetGameObjects(VEHNAME);
+		GameObjectList l = Game::GetGameObjects("ls40");
 		if(l.GetNumObjects()==0)
 			return true;
 		else 
@@ -46,45 +43,57 @@ object ls40 : CommandScript
 	{
 		Vehicle veh;
 		Actor spw;
-		Person p;
 
-		GameObjectList l = Game::GetGameObjects(VEHNAME);
+		GameObjectList l = Game::GetGameObjects("ls40");
 		if(l.GetNumObjects()==0)
 		{
-			veh = Game::CreateVehicle(VEHPATH,VEHNAME);
-			veh.SetCommandable(false);
-			veh.Hide();
+			veh = Game::CreateVehicle("mod:Prototypes/Vehicles/Fire Department/gtf.e4p","ls40");
 
-			Game::PushActionWait(ACTION_APPEND, RESP_TIME);
+			//TEMPORARY!
+			veh.SetMaxPassengers(6);
+			veh.SetSpeed(9.0);
+			//
+
+			veh.PushActionExecuteCommand(ACTION_NEWLIST, "DUMMYCommandable", &veh, 0, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYShowHide", &veh, 0, false);
+
 			GameObject* gv(veh);
 
+			/* POSCHECK DUMMY
 			bool ISFREEPOS = false;
 			while(!ISFREEPOS)
 			{
 				Game::PushActionWait(ACTION_APPEND, 5);
 				ISFREEPOS = Game::FindFreePosition(gv, spw.GetPosition(), 150);
 			}
-
+			*/
 			ActorList al = Game::GetActors(SPAWN_NORD);
 			spw = *al.GetActor(0);
 			veh.SetPosition(spw.GetPosition());
 
-			//BEGIN UNIT BLOCK
-			p = Game::CreatePerson(UNIT_GF,VEHNAME);
-			p.SetPosition(veh.GetPosition());
-			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
-			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
-			//END UNIT BLOCK
-			//BEGIN UNIT BLOCK
-			p = Game::CreatePerson(UNIT_NORMAL,VEHNAME);
-			p.SetPosition(veh.GetPosition());
-			p.PushActionExecuteCommand(ACTION_APPEND, COMMANDABLE_TRUE, &p, 1, true);
-			p.PushActionExecuteCommand(ACTION_APPEND, "entercar", o, 0, false);
-			//END UNIT BLOCK
+			Person p1 = Game::CreatePerson(UNIT_GF,"ls40_GF");
+			veh.AddPassenger(&p1);
+			Person p2 = Game::CreatePerson(UNIT_NORMAL,"ls40");
+			veh.AddPassenger(&p2);
+			Person p3 = Game::CreatePerson(UNIT_NORMAL,"ls40");
+			veh.AddPassenger(&p3);
+			Person p4 = Game::CreatePerson(UNIT_NORMAL,"ls40");
+			veh.AddPassenger(&p4);
+			Person p5 = Game::CreatePerson(UNIT_NORMAL,"ls40");
+			veh.AddPassenger(&p5);
+			Person p6 = Game::CreatePerson(UNIT_NORMAL,"ls40");
+			veh.AddPassenger(&p6);
 
-			veh.Show();
-			veh.SetCommandable(true);
+			veh.PushActionWait(ACTION_APPEND, (rand()%4)+30);
+
+			veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYShowHide", &veh, 1, false);
+			veh.EnableHeadLights(true);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSIBluelights", &veh, 0, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", &veh, 0, false);
+			veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", &veh, 1, false);
+
 			
+			veh.RemoveCommand("DUMMYInBase");
 
 		}
 		else
@@ -94,6 +103,6 @@ object ls40 : CommandScript
 			veh.RemoveCommand("DUMMYAvailable");
 		}
 
-		veh.PushActionMove(ACTION_APPEND, Target);
+		veh.PushActionMove(ACTION_APPEND, Target->GetPosition());
 	}
 };

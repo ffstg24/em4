@@ -245,7 +245,7 @@ object stg11 : CommandScript
 		else
 			veh.RemoveCommand("DUMMYAvailable");
 
-		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 2, false);
+		veh.PushActionExecuteCommand(ACTION_APPEND, "SOSISiren", o, 0, false);
 		veh.PushActionExecuteCommand(ACTION_APPEND, "DUMMYCommandable", o, 1, false);
 		veh.PushActionMove(ACTION_APPEND, targetpos);
 	}
