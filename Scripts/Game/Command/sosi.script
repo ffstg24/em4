@@ -48,7 +48,7 @@ object SOSISiren : CommandScript
 		
 		if (!v.HasCommand(DUMMY_HASSIREN)&&!childID)
 		{
-			v.SetSpeed(v.GetSpeed()*2);
+			//v.SetSpeed(v.GetSpeed()*2);
 
 			if (!v.IsBlueLightEnabled())
 			{
@@ -132,7 +132,7 @@ object SOSISiren : CommandScript
  		}
 		if (v.HasCommand(DUMMY_HASSIREN)||childID&&childID!=2)
 		{
-			v.SetSpeed(v.GetSpeed()/2);
+			//v.SetSpeed(v.GetSpeed()/2);
 			System::Log("Stop sample via SOSISiren");
 			int CarID = v.GetUserData();
 			int ref = v.GetUserData();
@@ -208,7 +208,7 @@ object SOSIUpdatePos : CommandScript
 		{
 			if ((!v.IsCurrentAction(EACTION_FINDPATH) && (v.GetNumActions() == 0 || v.IsCurrentAction(EACTION_EXTINGUISH))) || !v.IsBlueLightEnabled())
 			{
-				v.SetSpeed(v.GetSpeed()/2);
+				//v.SetSpeed(v.GetSpeed()/2);
 				
 				if (v.HasCommand(DUMMY_HASSIREN))
 					v.RemoveCommand(DUMMY_HASSIREN);
