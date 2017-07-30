@@ -1,5 +1,8 @@
 void Start()
 {
+
+	System::Log("Hallo i bims 1 Log lol");
+
 	GameObjectList ol;
 	GameObject* o;
 
