@@ -1,0 +1,88 @@
+object stgLZ : CommandScript
+{ 
+	stgLZ()
+	{
+		SetIcon("alarm");
+		SetCursor("alarm");
+	}
+	bool CheckPossible(GameObject *Caller){return true;}
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return Target->GetType()==ACTOR_STREET||Target->GetType()==ACTOR_FLOOR;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+		if(childID==0)
+		{
+			GameObject epos_marker=Game::CreateObject("mod:Prototypes/Objects/Dummy/houselight2.e4p","Unnamed");
+			epos_marker.SetPosition(Game::GetCommandPos());
+			epos_marker.Show();
+			epos_marker.PushActionWait(ACTION_APPEND,120);
+			epos_marker.PushActionDeleteOwner(ACTION_APPEND);
+
+			Game::ExecuteCommand("rtw",Caller,Target);
+
+			Caller->PushActionWait(ACTION_APPEND,20.0);
+			Caller->PushActionExecuteCommand(ACTION_APPEND,"stgLZ",&epos_marker,1,false);
+		}
+
+		if(childID==1)
+		{	
+			Game::ExecuteCommand("alarm",VehicleList("stg11").GetVehicle(0),VehicleList("stg11").GetVehicle(0));
+			Caller->PushActionWait(ACTION_APPEND,6.0);
+			Caller->PushActionExecuteCommand(ACTION_APPEND,"stgLZ",Target,2,false);
+		}
+
+		if(childID==2)
+		{
+			Game::ExecuteCommand("alarm",VehicleList("stg442").GetVehicle(0),VehicleList("stg442").GetVehicle(0));
+			Caller->PushActionWait(ACTION_APPEND,6.0);
+			Caller->PushActionExecuteCommand(ACTION_APPEND,"stgLZ",Target,3,false);
+		}
+
+		if(childID==3)
+		{
+			Game::ExecuteCommand("alarm",VehicleList("stg33").GetVehicle(0),VehicleList("stg33").GetVehicle(0));
+			Caller->PushActionWait(ACTION_APPEND,6.0);
+			Caller->PushActionExecuteCommand(ACTION_APPEND,"stgLZ",Target,4,false);
+		}
+
+		if(childID==4)
+		{
+			Game::ExecuteCommand("alarm",VehicleList("stg24").GetVehicle(0),VehicleList("stg24").GetVehicle(0));
+			Caller->PushActionWait(ACTION_APPEND,6.0);
+			Caller->PushActionExecuteCommand(ACTION_APPEND,"stgLZ",Target,5,false);
+		}
+
+		if(childID==5)
+		{
+			GameObject obj(Target);
+			obj.PushActionWait(ACTION_APPEND,60);
+			obj.PushActionDeleteOwner(ACTION_APPEND);
+
+			//Ausrückroutine + Statuscheck + Statusupdate 	S3
+
+
+
+
+
+
+
+		}
+	}
+};
+
+object alarm : CommandScript
+{
+	alarm()
+	{
+		SetIcon("alarm");
+		SetCursor("alarm");
+	}
+
+	bool CheckPossible(GameObject *Caller){return true;}
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return Target->GetType()==ACTOR_STREET||Target->GetType()==ACTOR_FLOOR;}
+	void PushActions(GameObject *Caller, Actor *Target, int childID)
+	{
+
+
+	}
+};
+
