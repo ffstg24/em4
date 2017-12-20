@@ -9,6 +9,8 @@ object stgLZ : CommandScript
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return Target->GetType()==ACTOR_STREET||Target->GetType()==ACTOR_FLOOR;}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
+		float ausrueckzeit = 20.0; //Zeit, bis ELW ausrückt
+
 		if(childID==0)
 		{
 			GameObject epos_marker=Game::CreateObject("mod:Prototypes/Objects/Dummy/houselight2.e4p","Unnamed");
@@ -19,7 +21,7 @@ object stgLZ : CommandScript
 
 			Game::ExecuteCommand("rtw",Caller,Target);
 
-			Caller->PushActionWait(ACTION_APPEND,20.0);
+			Caller->PushActionWait(ACTION_APPEND,ausrueckzeit);
 			Caller->PushActionExecuteCommand(ACTION_APPEND,"stgLZ",&epos_marker,1,false);
 		}
 
@@ -57,14 +59,43 @@ object stgLZ : CommandScript
 			obj.PushActionWait(ACTION_APPEND,60);
 			obj.PushActionDeleteOwner(ACTION_APPEND);
 
-			//Ausrückroutine + Statuscheck + Statusupdate 	S3
+			ausrueckzeit+=3.0;
 
+			Vehicle v1(VehicleList("stg11").GetVehicle(0));
+			if(v1.HasCommand("STATUS2"))
+			{
+				v1.PushActionWait(ACTION_APPEND,ausrueckzeit);
+				v1.PushActionMove(ACTION_APPEND, Target->GetPosition(), false);
+				v1.RemoveCommand("STATUS2");
+				ausrueckzeit+=4.0;
+			}
 
+			Vehicle v2(VehicleList("stg442").GetVehicle(0));
+			if(v2.HasCommand("STATUS2"))
+			{
+				v2.PushActionWait(ACTION_APPEND,ausrueckzeit);
+				v2.PushActionMove(ACTION_APPEND, Target->GetPosition(), false);
+				v2.RemoveCommand("STATUS2");
+				ausrueckzeit+=4.0;
+			}
 
+			Vehicle v3(VehicleList("stg33").GetVehicle(0));
+			if(v3.HasCommand("STATUS2"))
+			{
+				v3.PushActionWait(ACTION_APPEND,ausrueckzeit);
+				v3.PushActionMove(ACTION_APPEND, Target->GetPosition(), false);
+				v3.RemoveCommand("STATUS2");
+				ausrueckzeit+=4.0;
+			}
 
-
-
-
+			Vehicle v4(VehicleList("stg24").GetVehicle(0));
+			if(v4.HasCommand("STATUS2"))
+			{
+				v4.PushActionWait(ACTION_APPEND,ausrueckzeit);
+				v4.PushActionMove(ACTION_APPEND, Target->GetPosition(), false);
+				v4.RemoveCommand("STATUS2");
+				ausrueckzeit+=4.0;
+			}
 		}
 	}
 };
