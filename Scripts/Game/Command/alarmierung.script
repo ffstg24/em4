@@ -112,7 +112,16 @@ object alarm : CommandScript
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID){return Target->GetType()==ACTOR_STREET||Target->GetType()==ACTOR_FLOOR;}
 	void PushActions(GameObject *Caller, Actor *Target, int childID)
 	{
+		Vehicle v(Caller);
+		
+		if(v.HasNamePrefix("stg"))
+		{
+			
+		}
+		else
+		{
 
+		}
 
 	}
 };
