@@ -29,28 +29,50 @@ void OnClickedElement(const char *Dialog, const char *Element)
 		
 }
 
-void GenerateRandomCallout()
+void EinsatzErzeugen(int debugID = -1)
 {
 
-	const char E_STICHWORT[255];
-	const char E_ABTEILUNG[255];
-	const char E_MAP[255];
-	const char E_RICHTUNG[255];
-	const char E_ART[255];
-	const char E_ALARMZEIT[255];
+	const char RIC[128];
+	const char STICHWORT[128];
+	const char ORT[128];
+	const char ADRESSE[128];
+	const char BEMERKUNG[128];
+	const char MAP[128];
+	const char OBJNAME[128];
+	const char RICHTUNG[128];
 
 	int E_ID;
 
-	if(E_ANZAHL) E_ID = Math::Rand() % E_ANZAHL;
-	else return;
-
-	if(!E_ID) GenerateRandomCallout();
+	if(E_ANZAHL && debugID < 0) E_ID = Math::Rand() % E_ANZAHL; else E_ID = debugID;
 
 	char XMLString[255];
-	snprintf(XMLString, 255, "MapPfad_%i", EinsatzNummer);
-	Game::GetGameString(XMLString, Map, 128);
-		snprintf(XMLString, 255, "Richtung_%i", EinsatzNummer);
-		char RichtungSTR[128];
-		Game::GetGameString(XMLString, RichtungSTR, 128);
+
+	snprintf(XMLString, 128, "XMLRIC_%i", E_ID);
+	Game::GetGameString(XMLString, RIC, 128);
+
+	snprintf(XMLString, 128, "XMLSTICHWORT_%i", E_ID);
+	Game::GetGameString(XMLString, STICHWORT, 128);
+
+	snprintf(XMLString, 128, "XMLORT_%i", E_ID);
+	Game::GetGameString(XMLString, ORT, 128);
+
+	snprintf(XMLString, 128, "XML_ADRESSE%i", E_ID);
+	Game::GetGameString(XMLString, ADRESSE, 128);
+
+	snprintf(XMLString, 128, "XMLBEMERKUNG_%i", E_ID);
+	Game::GetGameString(XMLString, BEMERKUNG, 128);
+
+	snprintf(XMLString, 128, "XML_MAP%i", E_ID);
+	Game::GetGameString(XMLString, MAP, 128);
+
+	snprintf(XMLString, 128, "XMLOBJNAME_%i", E_ID);
+	Game::GetGameString(XMLString, OBJNAME, 128);
+
+	snprintf(XMLString, 128, "XMLRICHTUNG_%i", E_ID);
+	Game::GetGameString(XMLString, RICHTUNG, 128);
+
+	System::Log("DEBUG: Einsatz erzeugt!")
+
 
 }
+
