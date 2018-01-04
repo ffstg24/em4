@@ -1,0 +1,33 @@
+<!-- 
+
+Einsatz-Übersicht
+
+Hier können neue Einsätze hinzugefügt werden. Alle Einsätze werden nach dem gleichen
+Muster erstellt:
+
+	<string name="XMLRIC_X"></string>	
+	<string name="XMLORT_X"></string>
+	<string name="XMLSTICHWORT_X"></string>
+	<string name="XMLADRESSE_X"></string>
+	<string name="XMLBEMERKUNG_X"></string>
+	<string name="XMLMAP_X"></string>
+	<string name="XMLOBJNAME_X"></string>
+	<string name="XMLRICHTUNG_X"></string> 
+	
+
+-->
+<strings>
+	<string name="anzahlEinsaetze">1</string>
+	
+	<string name="XMLRIC_0">Hilfe</string>
+	<string name="XMLSTICHWORT_0">Verkehrsunfall schwer</string>
+	<string name="XMLORT_0">Langenschiltach</string>
+	<string name="XMLADRESSE_0">L175 Richtung Tennenbronn</string>
+	<string name="XMLBEMERKUNG_0">PKW vs. Baum</string>
+	<string name="XMLMAP_0">mod:Maps/Langenschiltach/Adler.e4m</string>
+	<string name="XMLOBJNAME_0">vu1</string>
+	<string name="XMLRICHTUNG_0">0</string>
+	
+	
+	
+</string>

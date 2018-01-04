@@ -1,0 +1,56 @@
+int E_ANZAHL = 0;
+
+object Mission01 : MissionScript
+{		
+	Mission01()
+	{
+	}
+}
+
+void Start()
+{
+	char XMLEcount[128];
+	Game::GetGameString("anzahlEinsaetze", XMLEcount, 128);
+	E_ANZAHL = Math::atoi(XMLEcount);
+}
+
+void Update()
+{
+
+}
+
+void OnTimer(const char *TimerName, float TimeInSec)
+{
+
+}
+
+void OnClickedElement(const char *Dialog, const char *Element)
+{
+		
+}
+
+void GenerateRandomCallout()
+{
+
+	const char E_STICHWORT[255];
+	const char E_ABTEILUNG[255];
+	const char E_MAP[255];
+	const char E_RICHTUNG[255];
+	const char E_ART[255];
+	const char E_ALARMZEIT[255];
+
+	int E_ID;
+
+	if(E_ANZAHL) E_ID = Math::Rand() % E_ANZAHL;
+	else return;
+
+	if(!E_ID) GenerateRandomCallout();
+
+	char XMLString[255];
+	snprintf(XMLString, 255, "MapPfad_%i", EinsatzNummer);
+	Game::GetGameString(XMLString, Map, 128);
+		snprintf(XMLString, 255, "Richtung_%i", EinsatzNummer);
+		char RichtungSTR[128];
+		Game::GetGameString(XMLString, RichtungSTR, 128);
+
+}
