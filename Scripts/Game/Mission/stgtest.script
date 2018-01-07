@@ -7,14 +7,16 @@ int E_ANZAHL = 0;
 
 char* Abteilungswehr = "Stadt";
 bool Tag;
-bool Basis;
+bool Basis = true;
 bool EinsatzAktiv = false;
+bool EinsatzAbgeschlossen = false;
 
-GameDialog DME;
+GameDialog GD_DME;
 char DME_Pfad[255];
 char DME_Sound[255];
 int AlarmSound;
 
+GameDialog GD_MAPCHANGE;
 
 
 object Mission01 : MissionScript
@@ -46,6 +48,9 @@ object Mission01 : MissionScript
 		ScriptInterface::HideBriefing();
 		ScriptInterface::HideTips();
 		ScriptInterface::HideObjectives();    
+		
+		int h,m,s;
+		Game::GetTime(h,m,s);
 
 		System::Log("START: Lade XML-Datei für DME");
 		Game::GetGameString("XMLDMETYP", SPEICHER, 255);
@@ -53,12 +58,15 @@ object Mission01 : MissionScript
 		snprintf(DME_Pfad, 255, "Mod:/UI/Game/DME/%s/dme.xml", SPEICHER);
 		snprintf(DME_Sound, 255, "Mod:/Audio/FX/Alarmierung/%s/dme.wav", SPEICHER);
 
-		DME.Load(DME_Pfad);
-		DME.Show("DME_BOX", false);
+		GD_DME.Load(DME_Pfad);
+		GD_DME.Show("DME_BOX", false);
 
-		int h,m,s;
-		Game::GetTime(h,m,s);
-
+		GD_MAPCHANGE.Load("Mod:/UI/Game/MAPCONTROL/mapcontrol.xml");
+		
+		GD_MAPCHANGE.StaticText_SetText("MAPCONTROL_UHRZEIT", "00:00");
+		GD_MAPCHANGE.StaticText_SetText("MAPCONTROL_TAG", "Lauchtag");
+		GD_MAPCHANGE.Show("MAPCONTROL_BOX", true);
+		
 		if(h>8&&h<18) Tag = true; else Tag = false;
 
 		Init();
@@ -74,7 +82,7 @@ object Mission01 : MissionScript
 	{
 
 	}
-
+	
 	void OnTimer(const char *TimerName, float TimeInSec)
 	{
 		char log[128];
@@ -111,7 +119,7 @@ object Mission01 : MissionScript
 
 	void OnClickedElement(const char *Dialog, const char *Element)
 	{
-		Audio::Audio::PlaySample("Game:/Audio/FX/misc/Buttonklick01.wav");
+		
 		if(StrCompare(Dialog, "DME")==0)
 		{
 			System::Log("GUI: DME meldet Betätigung...");
@@ -119,21 +127,51 @@ object Mission01 : MissionScript
 			{
 				case "DME_BESTAETIGEN":
 				{
-					
+					Klick();
 					System::Log("GUI: DME Meldung bestätigt!");
 					Audio::StopSample(AlarmSound);
 				}
 				break;
 				case "DME_AUSBLENDEN":
 				{
+					
 					System::Log("GUI: DME Melder ausgeblendet!");
 					Audio::StopSample(AlarmSound);
-					DME.Show("DME_BOX", false);
+					GD_DME.Show("DME_BOX", false);
+				}
+				break;
+			}
+		}
+		if(StrCompare(Dialog, "MAPCONTROL")==0)
+		{
+			System::Log("GUI: MAPCHANGE meldet Betätigung...");
+			switch (Element)
+			{
+				case "MAPCONTROL_MAPCHANGE":
+				{
+					System::Log("GUI: MapChange ausgelöst!");
+				}
+				break;
+				case "MAPCONTROL_DACH":
+				{
+					System::Log("GUI: Dachmenü ausgelöst!");
 				}
 				break;
 			}
 		}
 			
+	}
+
+	void MapChange(char* map)
+	{
+		if(Basis)
+		{
+
+		}
+		else 
+		{
+
+		}
 	}
 
 	void EinsatzErzeugen(int debugID)
@@ -248,8 +286,8 @@ object Mission01 : MissionScript
 	void MelderAnzeigen(char* text)
 	{
 		System::Log("DEBUG: Melder wird eingeblendet...");
-		DME.StaticText_SetText("DME_TEXT", text);
-		DME.Show("DME_BOX", true);
+		GD_DME.StaticText_SetText("DME_TEXT", text);
+		GD_DME.Show("DME_BOX", true);
 		AlarmSound = Audio::PlaySample(DME_Sound);
 	}
 };
