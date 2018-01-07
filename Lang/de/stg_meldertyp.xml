@@ -1,0 +1,9 @@
+<!-- 
+Mögliche Meldertypen:
+"EuroBOS Zeus"
+"Swissphone Patron"
+-->
+
+<strings>
+	<string name="XMLDMETYP">Swissphone Patron</string>
+</strings>

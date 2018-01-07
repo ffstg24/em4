@@ -11,8 +11,8 @@ bool Basis;
 bool EinsatzAktiv = false;
 
 GameDialog DME;
-const char* DME_Pfad = "mod:UI/Game/DME/EuroBOS Zeus/dme.xml";
-const char* DME_Sound = "mod:Audio/FX/Alarmierung/zeus.wav";
+char DME_Pfad[255];
+char DME_Sound[255];
 int AlarmSound;
 
 
@@ -33,9 +33,9 @@ object Mission01 : MissionScript
 	void Start()
 	{	
 		System::Log("START: Rahmenbedingungen werden erzeugt...");
-		char XMLEcount[255];
-		Game::GetGameString("anzahlEinsaetze", XMLEcount, 255);
-		E_ANZAHL = Math::atoi(XMLEcount);
+		char SPEICHER[255];
+		Game::GetGameString("anzahlEinsaetze", SPEICHER, 255);
+		E_ANZAHL = Math::atoi(SPEICHER);
 
 		System::Log("START: UI wird ausgeblendet...");
 		ScriptInterface::HideMap();
@@ -48,6 +48,11 @@ object Mission01 : MissionScript
 		ScriptInterface::HideObjectives();    
 
 		System::Log("START: Lade XML-Datei für DME");
+		Game::GetGameString("XMLDMETYP", SPEICHER, 255);
+
+		snprintf(DME_Pfad, 255, "Mod:/UI/Game/DME/%s/dme.xml", SPEICHER);
+		snprintf(DME_Sound, 255, "Mod:/Audio/FX/Alarmierung/%s/dme.wav", SPEICHER);
+
 		DME.Load(DME_Pfad);
 		DME.Show("DME_BOX", false);
 

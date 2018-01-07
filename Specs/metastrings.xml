@@ -17,4 +17,5 @@
 	<file name="lang:portraits.xml" />
 
 	<file name="mod:Lang/de/stg_einsaetze.xml" />
+	<file name="mod:Lang/de/stg_meldertyp.xml" />
 </meta>
