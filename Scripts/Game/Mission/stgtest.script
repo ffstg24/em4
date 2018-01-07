@@ -1,78 +1,250 @@
+/*DEBUG-WERTE*/
+int e_nr = -1; 		//Gezielt einen bestimmten Einsatz auslösen (-1 = zufällige Auswahl)
+int t_force = 10; 	//Einsatz nach eingegebener Zeit auslösen (-1 = zufällige Dauer bis Einsatz) !WERT DARF NICHT 0 SEIN!
+/**/
+
 int E_ANZAHL = 0;
 
+char* Abteilungswehr = "Stadt";
+bool Tag;
+bool Basis;
+bool EinsatzAktiv = false;
+
+GameDialog DME;
+const char* DME_Pfad = "mod:UI/Game/DME/EuroBOS Zeus/dme.xml";
+const char* DME_Sound = "mod:Audio/FX/Alarmierung/zeus.wav";
+int AlarmSound;
+
+
+
 object Mission01 : MissionScript
-{		
+{
 	Mission01()
 	{
+		System::Log("KONSTRUKTOR: Missions-Konstruktor aufgerufen!");
+
 	}
-}
 
-void Start()
-{
-	char XMLEcount[128];
-	Game::GetGameString("anzahlEinsaetze", XMLEcount, 128);
-	E_ANZAHL = Math::atoi(XMLEcount);
-}
+	~Mission01()
+	{
 
-void Update()
-{
+	}
 
-}
+	void Start()
+	{	
+		System::Log("START: Rahmenbedingungen werden erzeugt...");
+		char XMLEcount[255];
+		Game::GetGameString("anzahlEinsaetze", XMLEcount, 255);
+		E_ANZAHL = Math::atoi(XMLEcount);
 
-void OnTimer(const char *TimerName, float TimeInSec)
-{
+		System::Log("START: UI wird ausgeblendet...");
+		ScriptInterface::HideMap();
+		ScriptInterface::HideRadar();
+		ScriptInterface::HideNavigator();
+		ScriptInterface::HideInfoBar();
+		ScriptInterface::HideVehicleBrowser();
+		ScriptInterface::HideBriefing();
+		ScriptInterface::HideTips();
+		ScriptInterface::HideObjectives();    
 
-}
+		System::Log("START: Lade XML-Datei für DME");
+		DME.Load(DME_Pfad);
+		DME.Show("DME_BOX", false);
 
-void OnClickedElement(const char *Dialog, const char *Element)
-{
-		
-}
+		int h,m,s;
+		Game::GetTime(h,m,s);
 
-void EinsatzErzeugen(int debugID = -1)
-{
+		if(h>8&&h<18) Tag = true; else Tag = false;
 
-	const char RIC[128];
-	const char STICHWORT[128];
-	const char ORT[128];
-	const char ADRESSE[128];
-	const char BEMERKUNG[128];
-	const char MAP[128];
-	const char OBJNAME[128];
-	const char RICHTUNG[128];
+		Init();
+	}
 
-	int E_ID;
+	void Init()
+	{	
+		if(t_force < 0) Mission::StartSingleTimer("T_FAX", (Math::rand() % 180) + 40);
+		else Mission::StartSingleTimer("T_FAX", t_force);
+	}
 
-	if(E_ANZAHL && debugID < 0) E_ID = Math::Rand() % E_ANZAHL; else E_ID = debugID;
+	void Update()
+	{
 
-	char XMLString[255];
+	}
 
-	snprintf(XMLString, 128, "XMLRIC_%i", E_ID);
-	Game::GetGameString(XMLString, RIC, 128);
+	void OnTimer(const char *TimerName, float TimeInSec)
+	{
+		char log[128];
+		snprintf(log, 128, "DEBUG: Timer %s hat ausgelöst!", TimerName);
+		System::Log(log);
 
-	snprintf(XMLString, 128, "XMLSTICHWORT_%i", E_ID);
-	Game::GetGameString(XMLString, STICHWORT, 128);
+		switch (TimerName)
+		{
+			case "T_FAX":
+			{
+				if(EinsatzAktiv) break;
 
-	snprintf(XMLString, 128, "XMLORT_%i", E_ID);
-	Game::GetGameString(XMLString, ORT, 128);
+				System::Log("DEBUG: Ein Fax wurde empfangen!");
+				EinsatzAktiv = true;
+				GameObjectList gol = Game::GetGameObjects("fax");
+				if(gol.GetNumObjects() > 0)
+				{
+					GameObject* go = gol.GetObject(0);
+					Vector vgo = go->GetPosition();
+					Audio::PlaySample3D("mod:/Audio/FX/Alarmierung/fax.wav", vgo, false);
+				}
+				int tmp = (Math::rand() % 10) + 6;
+				Mission::StartSingleTimer("T_EINSATZ", tmp);
+			}
+			break;
+			case "T_EINSATZ":
+			{
+				System::Log("DEBUG: Rufe Methode zum Erzeugen eines Einsatzes auf...");
+				EinsatzErzeugen(e_nr);
+			}
+			break;
+		}
+	}
 
-	snprintf(XMLString, 128, "XML_ADRESSE%i", E_ID);
-	Game::GetGameString(XMLString, ADRESSE, 128);
+	void OnClickedElement(const char *Dialog, const char *Element)
+	{
+		Audio::Audio::PlaySample("Game:/Audio/FX/misc/Buttonklick01.wav");
+		if(StrCompare(Dialog, "DME")==0)
+		{
+			System::Log("GUI: DME meldet Betätigung...");
+			switch (Element)
+			{
+				case "DME_BESTAETIGEN":
+				{
+					
+					System::Log("GUI: DME Meldung bestätigt!");
+					Audio::StopSample(AlarmSound);
+				}
+				break;
+				case "DME_AUSBLENDEN":
+				{
+					System::Log("GUI: DME Melder ausgeblendet!");
+					Audio::StopSample(AlarmSound);
+					DME.Show("DME_BOX", false);
+				}
+				break;
+			}
+		}
+			
+	}
 
-	snprintf(XMLString, 128, "XMLBEMERKUNG_%i", E_ID);
-	Game::GetGameString(XMLString, BEMERKUNG, 128);
+	void EinsatzErzeugen(int debugID)
+	{
+		System::Log("DEBUG: Einsatz wird erzeugt...");
 
-	snprintf(XMLString, 128, "XML_MAP%i", E_ID);
-	Game::GetGameString(XMLString, MAP, 128);
+		const char RIC[128];
+		const char STICHWORT[128];
+		const char ORT[128];
+		const char ADRESSE[128];
+		const char BEMERKUNG[128];
+		const char MAP[128];
+		const char OBJNAME[128];
+		const char RICHTUNG[128];
 
-	snprintf(XMLString, 128, "XMLOBJNAME_%i", E_ID);
-	Game::GetGameString(XMLString, OBJNAME, 128);
+		int E_ID;
 
-	snprintf(XMLString, 128, "XMLRICHTUNG_%i", E_ID);
-	Game::GetGameString(XMLString, RICHTUNG, 128);
+		if(E_ANZAHL && debugID < 0)
+		{
+			System::Log("Test");
+			E_ID = Math::rand() % E_ANZAHL; 
+		}
+		else E_ID = debugID;
 
-	System::Log("DEBUG: Einsatz erzeugt!")
+		char XMLString[255];
 
+		snprintf(XMLString, 128, "XMLRIC_%i", E_ID);
+		Game::GetGameString(XMLString, RIC, 128);
 
-}
+		snprintf(XMLString, 128, "XMLSTICHWORT_%i", E_ID);
+		Game::GetGameString(XMLString, STICHWORT, 128);
 
+		snprintf(XMLString, 128, "XMLORT_%i", E_ID);
+		Game::GetGameString(XMLString, ORT, 128);
+
+		snprintf(XMLString, 128, "XMLADRESSE_%i", E_ID);
+		Game::GetGameString(XMLString, ADRESSE, 128);
+
+		snprintf(XMLString, 128, "XMLBEMERKUNG_%i", E_ID);
+		Game::GetGameString(XMLString, BEMERKUNG, 128);
+
+		snprintf(XMLString, 128, "XMLMAP_%i", E_ID);
+		Game::GetGameString(XMLString, MAP, 128);
+
+		snprintf(XMLString, 128, "XMLOBJNAME_%i", E_ID);
+		Game::GetGameString(XMLString, OBJNAME, 128);
+
+		snprintf(XMLString, 128, "XMLRICHTUNG_%i", E_ID);
+		Game::GetGameString(XMLString, RICHTUNG, 128);
+
+		System::Log("DEBUG: Einsatz erfolgreich erzeugt!");
+		System::Log(RIC);
+		System::Log(STICHWORT);
+		System::Log(ORT);
+		System::Log(ADRESSE);
+		System::Log(BEMERKUNG);
+		System::Log(MAP);
+		System::Log(OBJNAME);
+		System::Log(RICHTUNG);
+		Alarmierung(RIC, STICHWORT, ORT, ADRESSE, BEMERKUNG, MAP, OBJNAME, RICHTUNG);
+
+	}
+
+	void Alarmierung(char* RIC, char* STICHWORT, char* ORT, char* ADRESSE, char* BEMERKUNG, char* MAP, char* OBJNAME, char* RICHTUNG)
+	{
+		char MELDERTEXT[512];
+		int Anzahl;
+
+		System::Log("DEBUG: Alarmierung wird vorbereitet...");
+
+		if(StrCompare(RIC, "Kleineinsatz") == 0)
+		{
+			int g = (Math::rand() % 3)+1;
+			snprintf(MELDERTEXT, 512, "Feuerwehr St. Georgen Kleineinsatz Gruppe %i: %s, %s, %s %s", g, STICHWORT, ORT, ADRESSE, BEMERKUNG);
+
+			Anzahl = (Math::rand() % 10) + 6;
+			if(Tag) Anzahl += Math::rand() % 4;
+		}
+		else if(StrCompare(RIC, "Brand") == 0)
+		{
+			snprintf(MELDERTEXT, 512, "Feuerwehr St. Georgen Einsatzalarm Brand: %s, %s, %s %s", STICHWORT, ORT, ADRESSE, BEMERKUNG);
+			Anzahl = (Math::rand() % 18) + 14;
+			if(Tag && Anzahl >= 18) Anzahl -= Math::rand() % 6;
+		}
+		else if(StrCompare(RIC, "Hilfe") == 0)
+		{
+			snprintf(MELDERTEXT, 512, "Feuerwehr St. Georgen Einsatzalarm Hilfe: %s, %s, %s %s", STICHWORT, ORT, ADRESSE, BEMERKUNG);
+			Anzahl = (Math::rand() % 18) + 14;
+			if(Tag && Anzahl >= 18) Anzahl -= Math::rand() % 6;
+		}
+
+		System::Log(MELDERTEXT);
+		System::Log("DEBUG: Alarmierung Stadtwehr erfolgt jetzt...");
+
+		if(StrCompare(ORT,"Peterzell") == 0 || StrCompare(ORT,"Oberkirnach") == 0 || StrCompare(ORT,"Langenschiltach") == 0)
+			Abteilungswehr = ORT;
+		else if (StrCompare(ORT,"Peterzell-Stockburg") == 0 || StrCompare(ORT,"Stockburg"))
+			Abteilungswehr = "Peterzell";
+		else Abteilungswehr = "Stadt";
+
+		System::Log("DEBUG: Alarmierung Abteilungswehr wird geprüft und gegebenfalls durchgeführt!");
+
+		MelderAnzeigen(MELDERTEXT);
+		EinsatzkraefteErstellen(Anzahl);
+	}
+
+	void EinsatzkraefteErstellen(int Anzahl)
+	{
+		System::Log("DEBUG: Einsatzkräfte unterwegs zur Wache...");
+	}
+
+	void MelderAnzeigen(char* text)
+	{
+		System::Log("DEBUG: Melder wird eingeblendet...");
+		DME.StaticText_SetText("DME_TEXT", text);
+		DME.Show("DME_BOX", true);
+		AlarmSound = Audio::PlaySample(DME_Sound);
+	}
+};
