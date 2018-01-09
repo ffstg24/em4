@@ -16,8 +16,7 @@ char DME_Pfad[255];
 char DME_Sound[255];
 int AlarmSound;
 
-GameDialog GD_MAPCHANGE;
-
+GameDialog GD_MAPCONTROL;
 
 object Mission01 : MissionScript
 {
@@ -61,11 +60,10 @@ object Mission01 : MissionScript
 		GD_DME.Load(DME_Pfad);
 		GD_DME.Show("DME_BOX", false);
 
-		GD_MAPCHANGE.Load("Mod:/UI/Game/MAPCONTROL/mapcontrol.xml");
-		
-		GD_MAPCHANGE.StaticText_SetText("MAPCONTROL_UHRZEIT", "00:00");
-		GD_MAPCHANGE.StaticText_SetText("MAPCONTROL_TAG", "Lauchtag");
-		GD_MAPCHANGE.Show("MAPCONTROL_BOX", true);
+		GD_MAPCONTROL.Load("Mod:UI/Game/MAPCONTROL/mapcontrol.xml");
+		GD_MAPCONTROL.StaticText_SetText("MAPCONTROL_UHR", "TE:ST");
+		GD_MAPCONTROL.Show("MAPCONTROL_BOX", true);
+
 		
 		if(h>8&&h<18) Tag = true; else Tag = false;
 
@@ -118,7 +116,7 @@ object Mission01 : MissionScript
 
 	void OnClickedElement(const char *Dialog, const char *Element)
 	{
-		
+		if(StrCompare(Element, "MAPCONTROL_UHR")==0) System::Log("Uhr");
 		if(StrCompare(Dialog, "DME")==0)
 		{
 			System::Log("GUI: DME meldet Betätigung...");
@@ -142,22 +140,8 @@ object Mission01 : MissionScript
 		}
 		if(StrCompare(Dialog, "MAPCONTROL")==0)
 		{
-			System::Log("GUI: MAPCHANGE meldet Betätigung...");
-			switch (Element)
-			{
-				case "MAPCONTROL_MAPCHANGE":
-				{
-					System::Log("GUI: MapChange ausgelöst!");
-				}
-				break;
-				case "MAPCONTROL_DACH":
-				{
-					System::Log("GUI: Dachmenü ausgelöst!");
-				}
-				break;
-			}
+			System::Log("GUI: MAPCONTROL meldet Betätigung...");
 		}
-			
 	}
 
 	void MapChange(char* map)
