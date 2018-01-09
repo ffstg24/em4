@@ -100,9 +100,8 @@ object Mission01 : MissionScript
 				GameObjectList gol = Game::GetGameObjects("fax");
 				if(gol.GetNumObjects() > 0)
 				{
-					GameObject* go = gol.GetObject(0);
-					Vector vgo = go->GetPosition();
-					Audio::PlaySample3D("mod:/Audio/FX/Alarmierung/fax.wav", vgo, false);
+					GameObject* g = gol.GetObject(0);
+					Audio::PlaySample3D("mod:/Audio/FX/Alarmierung/fax.wav", g->GetPosition(), false);
 				}
 				int tmp = (Math::rand() % 10) + 6;
 				Mission::StartSingleTimer("T_EINSATZ", tmp);
@@ -127,7 +126,6 @@ object Mission01 : MissionScript
 			{
 				case "DME_BESTAETIGEN":
 				{
-					Klick();
 					System::Log("GUI: DME Meldung bestätigt!");
 					Audio::StopSample(AlarmSound);
 				}
